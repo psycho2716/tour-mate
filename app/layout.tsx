@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter, Oleo_Script, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/providers/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 const oleoScript = Oleo_Script({
@@ -29,14 +30,17 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" className={`${oleoScript.variable} ${playfair.variable}`}>
+        <html
+            lang="en"
+            className={`${oleoScript.variable} ${playfair.variable}`}
+            suppressHydrationWarning
+        >
             <body className={inter.className}>
                 <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
                     <div className="flex min-h-screen flex-col">
-                        <div className="flex-1" suppressHydrationWarning>
-                            {children}
-                        </div>
+                        <div className="flex-1">{children}</div>
                     </div>
+                    <Toaster />
                 </ThemeProvider>
             </body>
         </html>

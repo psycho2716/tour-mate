@@ -5,13 +5,14 @@ import { MapPin, Languages } from "lucide-react";
 import { useAnimationInterval } from "@/hooks/useAnimationInterval";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { ReactNode } from "react";
 
-export function HeroSection() {
+export function HeroSection({ heroContent }: { heroContent: ReactNode }) {
     const navigationAnimating = useAnimationInterval(false, 4000);
     const translationAnimating = useAnimationInterval(false, 4000, 2000);
 
     return (
-        <section id="home" className="w-full relative">
+        <section id="home" className="w-full h-full min-h-screen relative">
             <div className="absolute inset-0 z-0">
                 <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/20 z-10" />
                 <Image
@@ -25,23 +26,7 @@ export function HeroSection() {
 
             <div className="relative z-10 pt-20 pb-32 md:pt-32 md:pb-40">
                 <div className="container mx-auto flex justify-center items-center gap-12">
-                    <div className="w-full max-w-[700px] text-white space-y-6">
-                        <h1 className="text-4xl md:text-6xl font-bold leading-tight">
-                            Your AI-Powered
-                            <br />
-                            Travel Companion
-                        </h1>
-                        <p className="text-lg md:text-xl opacity-90">
-                            Explore the world&apos;s most beautiful places with expert guides and
-                            personalized itineraries
-                        </p>
-                        <Link
-                            href="/register"
-                            className="bg-blue-500 hover:bg-blue-600 text-white px-14 py-3 rounded-full font-medium inline-block"
-                        >
-                            Explore Now
-                        </Link>
-                    </div>
+                    <div className="w-full max-w-[700px] text-white space-y-6">{heroContent}</div>
 
                     <div className="relative w-full max-w-[500px] mt-8 hidden md:block">
                         <div
