@@ -1,5 +1,6 @@
 import type React from "react";
 import type { Metadata } from "next";
+import { UserNavbar } from "@/components/common/user-navbar";
 
 export const metadata: Metadata = {
     title: "Dashboard - TourMate",
@@ -7,5 +8,10 @@ export const metadata: Metadata = {
 };
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
-    return <div className="min-h-screen flex flex-col">{children}</div>;
+    return (
+        <div className="min-h-screen flex flex-col">
+            <UserNavbar />
+            {children}
+        </div>
+    );
 }

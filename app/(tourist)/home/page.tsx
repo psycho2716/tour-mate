@@ -6,7 +6,6 @@ import { ExploreMapSection } from "@/components/tourist/explore-map-section";
 import { destinations as allDestinations } from "@/data/destinations";
 import { EventsSection } from "@/components/tourist/events-section";
 import { DestinationsSection } from "@/components/tourist/destinations-section";
-import { UserNavbar } from "@/components/common/user-navbar";
 
 export default function DashboardPage() {
     const [searchQuery, setSearchQuery] = useState("");
@@ -62,7 +61,6 @@ export default function DashboardPage() {
 
     return (
         <div className="min-h-screen flex flex-col">
-            <UserNavbar />
             <main className="flex-1">
                 <DashboardHero onSearch={handleSearch} />
                 <div className="container mx-auto px-4 py-8 space-y-12">

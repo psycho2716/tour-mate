@@ -8,6 +8,10 @@ export type Destination = {
     guides: number;
     category: "landmark" | "beach" | "mountain" | "city" | "historical";
     keywords: string[];
+    coordinates: {
+        lat: number;
+        lng: number;
+    };
 };
 
 export const destinations: Destination[] = [
@@ -17,10 +21,14 @@ export const destinations: Destination[] = [
         location: "Brgy. 2, Romblon, Romblon",
         description:
             "The Twin Forts of Romblon are a pair of Spanish fortifications located in the town of Romblon, Romblon in the Philippines.",
-        image: "/images/destination-1.jpg",
+        image: "/images/destinations/fuerza.jpg",
         rating: 4.8,
         guides: 4,
         category: "historical",
-        keywords: ["fort", "spanish", "colonial", "history", "romblon"]
+        keywords: ["fort", "spanish", "colonial", "history", "romblon"],
+        coordinates: {
+            lat: 12.578737019901709,
+            lng: 122.27035859323206
+        }
     }
 ];

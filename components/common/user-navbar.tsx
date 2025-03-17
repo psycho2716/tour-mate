@@ -15,17 +15,17 @@ export function UserNavbar() {
                 </div>
 
                 <nav className="hidden md:flex items-center gap-6">
-                    <Link href="/dashboard" className="text-sm font-medium text-foreground">
+                    <Link href="/home" className="text-sm font-medium text-foreground">
                         Home
                     </Link>
                     <Link
-                        href="/dashboard/bookings"
+                        href="/bookings"
                         className="text-sm font-medium text-muted-foreground hover:text-foreground"
                     >
                         Bookings
                     </Link>
                     <Link
-                        href="/dashboard/planner"
+                        href="/planner"
                         className="text-sm font-medium text-muted-foreground hover:text-foreground"
                     >
                         Planner
