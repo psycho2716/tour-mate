@@ -1,0 +1,71 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+Start all chats with 🤖
+
+# Project Configuration
+
+## Tech Stack
+- Next.js (Latest Version)
+- Supabase
+- Tailwind CSS
+- TypeScript
+- ShadCN UI
+
+## Folder Structure (This will be used as a reference only for managing the project files and folders)
+.
+├── app/
+│   ├── (auth)/
+│   │   ├── login/
+│   │   │   ├── page.tsx
+│   │   │   ├── form.tsx
+│   │   ├── admin/(dashboard)/
+│   │   ├── layout.tsx
+│   │   ├── page.tsx
+│   ├── api/
+│   │   ├── route.ts
+│   ├── layout.tsx
+│   ├── page.tsx
+├── components/
+│   ├── ui/
+│   │   ├── button.tsx
+│   │   ├── modal.tsx
+│   ├── dashboard/
+│   │   ├── sidebar.tsx
+│   │   ├── navbar.tsx
+│   ├── common/
+│   │   ├── loader.tsx
+│   │   ├── alert.tsx
+├── hooks/
+│   ├── useAuth.ts
+│   ├── useTheme.ts
+├── actions/
+│   ├── authActions.ts
+│   ├── userActions.ts
+├── lib/
+│   ├── supabaseClient.ts
+│   ├── utils.ts
+├── types/
+│   ├── user.ts
+│   ├── auth.ts
+├── data/
+│   ├── menuItems.ts
+│   ├── placeholderUsers.ts
+├── providers/
+│   ├── ThemeProvider.tsx
+│   ├── AuthProvider.tsx
+├── context/
+│   ├── AuthContext.tsx
+│   ├── ThemeContext.tsx
+├── public/
+├── .gitignore
+├── package.json
+├── tsconfig.json
+├── tailwind.config.js
+├── README.md
+
+## Environment Variables
+Create an empty `.env.local` file in the root directory.
+

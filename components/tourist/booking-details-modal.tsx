@@ -9,27 +9,6 @@ import { Button } from "../ui/button";
 import { Drawer, DrawerTrigger } from "../ui/drawer";
 import MapDrawer from "./map-drawer";
 
-export interface Booking {
-    id: number;
-    title: string;
-    location: string;
-    date: string;
-    time: string;
-    people: number;
-    image: string;
-    status: string;
-    tourGuide: {
-        name: string;
-        rating: number;
-        image: string;
-    };
-    coordinates?: {
-        lat: number;
-        lng: number;
-    };
-    specialRequests?: string;
-}
-
 interface BookingDetailsModalProps {
     isOpen: boolean;
     onClose: () => void;
@@ -43,7 +22,7 @@ export function BookingDetailsModal({ isOpen, onClose, booking }: BookingDetails
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Left side - Image and Basic Details */}
                     <div className="space-y-6">
-                        <div className="relative h-[250px] rounded-lg overflow-hidden bg-red-500">
+                        <div className="relative h-[250px] rounded-lg overflow-hidden">
                             <Image
                                 src={booking.image}
                                 alt={booking.title}
@@ -105,7 +84,7 @@ export function BookingDetailsModal({ isOpen, onClose, booking }: BookingDetails
 
                     {/* Right side - Additional Details */}
                     <div className="space-y-6">
-                        {/* Tour Guide Section */}
+                        {/* T Section */}
                         <div>
                             <h3 className="text-lg font-semibold mb-3">Tour Guide</h3>
                             <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg">

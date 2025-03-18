@@ -3,7 +3,7 @@
 import { useState, useRef } from "react";
 import { DashboardHero } from "@/components/tourist/hero-section";
 import { ExploreMapSection } from "@/components/tourist/explore-map-section";
-import { destinations as allDestinations } from "@/data/destinations";
+import { destinations as allDestinations } from "@/data/mockData";
 import { EventsSection } from "@/components/tourist/events-section";
 import { DestinationsSection } from "@/components/tourist/destinations-section";
 

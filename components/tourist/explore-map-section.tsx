@@ -3,7 +3,7 @@
 import { useJsApiLoader, Marker, InfoWindow } from "@react-google-maps/api";
 import { Button } from "@/components/ui/button";
 import { MapPin, Loader2 } from "lucide-react";
-import { destinations } from "@/data/destinations";
+import { destinations } from "@/data/mockData";
 import MapComponent from "../common/map";
 import { useExploreMap } from "@/hooks/use-explore-map";
 import Image from "next/image";

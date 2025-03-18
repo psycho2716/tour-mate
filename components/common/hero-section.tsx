@@ -4,7 +4,6 @@ import Image from "next/image";
 import { MapPin, Languages } from "lucide-react";
 import { useAnimationInterval } from "@/hooks/useAnimationInterval";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
 import { ReactNode } from "react";
 
 export function HeroSection({ heroContent }: { heroContent: ReactNode }) {
@@ -25,10 +24,12 @@ export function HeroSection({ heroContent }: { heroContent: ReactNode }) {
             </div>
 
             <div className="relative z-10 pt-20 pb-32 md:pt-32 md:pb-40">
-                <div className="container mx-auto flex justify-center items-center gap-12">
-                    <div className="w-full max-w-[700px] text-white space-y-6">{heroContent}</div>
+                <div className="container mx-auto flex flex-col md:flex-row justify-center items-center gap-12">
+                    <div className="w-full max-w-[700px] text-white space-y-6 text-center md:text-start">
+                        {heroContent}
+                    </div>
 
-                    <div className="relative w-full max-w-[500px] mt-8 hidden md:block">
+                    <div className="relative w-full max-w-[500px] mt-8">
                         <div
                             className={cn(
                                 "absolute top-8 -left-4 bg-white rounded-lg px-3 py-2 flex items-center gap-2 shadow-lg z-20 transition-transform duration-1000",

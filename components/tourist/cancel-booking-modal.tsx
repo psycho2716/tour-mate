@@ -4,15 +4,15 @@ import { AlertCircle } from "lucide-react";
 import { Modal } from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { useState, ChangeEvent } from "react";
-import { toast } from "sonner";
+import { ChangeEvent, useState } from "react";
 
 interface CancelBookingModalProps {
     isOpen: boolean;
     onClose: () => void;
-    handleCancelBooking: (id: number, reason: string) => void;
+    handleCancelBooking: (id: string, reason: string) => void;
     bookingDate: Date;
-    bookingId: number;
+    bookingId: string;
+    setShowCancelModal: (show: boolean) => void;
 }
 
 export function CancelBookingModal({
@@ -20,16 +20,10 @@ export function CancelBookingModal({
     onClose,
     handleCancelBooking,
     bookingDate,
-    bookingId
+    bookingId,
+    setShowCancelModal
 }: CancelBookingModalProps) {
-    const [reason, setReason] = useState("");
-
-    const handleConfirm = () => {
-        // TODO: Add API call to cancel booking using a custom hook
-        handleCancelBooking(bookingId, reason);
-        setReason("");
-        toast.success("Booking cancelled successfully");
-    };
+    const [reason, setReason] = useState<string>("");
 
     // Calculate if the booking is within 48 hours
     const isWithin48Hours = () => {
@@ -84,7 +78,13 @@ export function CancelBookingModal({
                     <Button variant="outline" onClick={onClose}>
                         Go Back
                     </Button>
-                    <Button variant="destructive" onClick={handleConfirm}>
+                    <Button
+                        variant="destructive"
+                        onClick={() => {
+                            setShowCancelModal(false);
+                            handleCancelBooking(bookingId, reason);
+                        }}
+                    >
                         Confirm Cancellation
                     </Button>
                 </div>

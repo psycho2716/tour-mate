@@ -41,7 +41,11 @@ export function Modal({
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
             <DialogContent
-                className={cn(sizeClasses[size], "max-h-[90vh] flex flex-col", className)}
+                className={cn(
+                    sizeClasses[size],
+                    "max-h-[90vh] md:max-h-screen flex flex-col",
+                    className
+                )}
             >
                 {(title || description || showCloseButton) && (
                     <DialogHeader className="flex-shrink-0 flex flex-row items-center justify-between border-b border-border py-4">

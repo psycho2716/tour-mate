@@ -2,7 +2,6 @@
 
 import { Search, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import type { Destination } from "@/data/destinations";
 import DestinationCard from "./destination-card";
 
 interface DestinationsSectionProps {
@@ -70,7 +69,7 @@ export function DestinationsSection({
                         No destinations found
                     </h3>
                     <p className="text-gray-500">
-                        We couldn't find any destinations matching "{searchQuery}"
+                        We couldn&apos;t find any destinations matching &quot;{searchQuery}&quot;
                     </p>
                     <Button variant="outline" className="mt-4" onClick={() => handleClearSearch()}>
                         Clear search

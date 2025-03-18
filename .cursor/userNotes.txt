@@ -1,0 +1,1 @@
+We are going to be in design mode. We're not going to be building any backend functionality for now. We are going to use dummy data as placeholders if needed which will be located at the /data folder on the root directory.

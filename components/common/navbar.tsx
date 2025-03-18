@@ -13,6 +13,7 @@ import { usePathname } from "next/navigation";
 export function Navbar({ className }: { className?: string }) {
     const [activeSection, setActiveSection] = useState("home");
     const pathName = usePathname();
+
     // Function to handle navigation click
     const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
         e.preventDefault();
@@ -44,7 +45,7 @@ export function Navbar({ className }: { className?: string }) {
     return (
         <header
             className={cn(
-                "w-full px-44 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60",
+                "w-full px-10 md:px-44 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-50",
                 className
             )}
         >

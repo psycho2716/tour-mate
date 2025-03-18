@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+import { users } from "@/data/mockData";
 
 export function LoginForm() {
     const router = useRouter();
@@ -32,18 +33,32 @@ export function LoginForm() {
                 return;
             }
 
-            // In a real app, you would handle authentication here
-            console.log("Login attempt with:", { email, password });
+            const user = users.find((user) => user.email === email);
+
+            if (!user) {
+                setError("Invalid email or password");
+                toast.error("Invalid email or password");
+                return;
+            }
+
+            if (user.password !== password) {
+                setError("Invalid email or password");
+                toast.error("Invalid email or password");
+                return;
+            }
+
+            if (user.type === "tourist") {
+                router.push("/home");
+            } else if (user.type === "tour-guide") {
+                router.push("/tour-guide");
+            } else if (user.type === "admin") {
+                router.push("/admin");
+            }
 
             // Show success message
-            toast("Login successful", {
+            toast.success("Login successful!", {
                 description: "Redirecting to dashboard..."
             });
-
-            // Redirect to dashboard after a short delay
-            setTimeout(() => {
-                router.push("/home");
-            }, 1000);
         }, 1500);
     };
 
@@ -94,7 +109,7 @@ export function LoginForm() {
 
             <div className="text-center">
                 <p className="text-sm text-muted-foreground">
-                    Don't have an account?{" "}
+                    Don&apos;t have an account?{" "}
                     <Link href="/register" className="text-primary font-medium hover:underline">
                         Register
                     </Link>

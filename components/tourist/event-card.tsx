@@ -13,7 +13,7 @@ interface EventCardProps {
 
 const EventCard = ({ imgUrl, title, date, location, description, category }: EventCardProps) => {
     return (
-        <div className="relative max-w-[350px] rounded-lg overflow-hidden group">
+        <div className="relative min-w-[350px] max-w-[350px] rounded-lg overflow-hidden group">
             <div className="absolute inset-0">
                 <Image
                     src={imgUrl}

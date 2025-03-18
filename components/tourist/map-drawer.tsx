@@ -6,9 +6,7 @@ import { cn } from "@/lib/utils";
 import { DrawerContent, DrawerHeader, DrawerTitle, DrawerClose } from "@/components/ui/drawer";
 import MapComponent from "../common/map";
 import { useJsApiLoader, Marker, DirectionsRenderer } from "@react-google-maps/api";
-import Image from "next/image";
 import { getPlaceDetails } from "@/app/(actions)/places";
-import { Skeleton } from "@/components/ui/skeleton";
 
 const libraries: "places"[] = ["places"];
 
@@ -46,33 +44,17 @@ const MapDrawer = ({ title, location, coordinates }: MapDrawerProps) => {
         rating: number | null;
         userRatingsTotal: number | null;
     } | null>(null);
-    const [placeLoading, setPlaceLoading] = useState(false);
-    const [placeError, setPlaceError] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchPlaceDetails = async () => {
             try {
-                setPlaceLoading(true);
-                setPlaceError(null);
-
-                const { data, error: placeError } = await getPlaceDetails(
-                    coordinates.lat,
-                    coordinates.lng
-                );
-
-                if (placeError) {
-                    setPlaceError(placeError);
-                    return;
-                }
+                const { data } = await getPlaceDetails(coordinates.lat, coordinates.lng);
 
                 if (data) {
                     setPlaceDetails(data);
                 }
             } catch (error) {
-                setPlaceError("Failed to fetch place details");
                 console.error("Error fetching place details:", error);
-            } finally {
-                setPlaceLoading(false);
             }
         };
 
@@ -169,27 +151,6 @@ const MapDrawer = ({ title, location, coordinates }: MapDrawerProps) => {
                     {/* Left side - Controls and Directions */}
                     <div className="basis-1/2">
                         <div className="px-4 pt-4 sticky top-0 bg-background z-10">
-                            {placeLoading ? (
-                                <div className="w-full h-[200px] mb-4">
-                                    <Skeleton className="w-full h-full rounded-lg" />
-                                </div>
-                            ) : placeDetails?.photo ? (
-                                <div className="w-full h-[200px] relative mb-4 rounded-lg overflow-hidden">
-                                    <Image
-                                        src={placeDetails.photo}
-                                        alt={title}
-                                        fill
-                                        className="object-cover"
-                                    />
-                                </div>
-                            ) : null}
-
-                            {placeError && (
-                                <div className="mb-4 p-3 bg-red-50 text-red-700 rounded-md text-sm">
-                                    {placeError}
-                                </div>
-                            )}
-
                             {/* Travel Mode Selector */}
                             <div className="w-full bg-gray-100 rounded-md p-1 flex shadow-sm">
                                 <button
