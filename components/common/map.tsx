@@ -1,7 +1,7 @@
 "use client";
 
-import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
-import { useCallback, useState } from "react";
+import { GoogleMap } from "@react-google-maps/api";
+import { useCallback } from "react";
 
 interface MapComponentProps {
     containerStyle?: {
@@ -15,6 +15,7 @@ interface MapComponentProps {
     children?: React.ReactNode;
     zoom?: number;
     isLoaded: boolean;
+    options?: google.maps.MapOptions;
     onMapLoad?: (map: google.maps.Map) => void;
 }
 
@@ -35,6 +36,13 @@ export default function MapComponent({
     children,
     zoom = 6,
     isLoaded,
+    options = {
+        streetViewControl: true,
+        fullscreenControl: true,
+        disableDefaultUI: false,
+        zoomControl: true,
+        mapTypeControl: false
+    },
     onMapLoad
 }: MapComponentProps) {
     const handleLoad = useCallback(
@@ -60,13 +68,7 @@ export default function MapComponent({
             center={center}
             zoom={zoom}
             onLoad={handleLoad}
-            options={{
-                streetViewControl: true,
-                fullscreenControl: true,
-                disableDefaultUI: false,
-                zoomControl: true,
-                mapTypeControl: false
-            }}
+            options={options}
         >
             {children}
         </GoogleMap>

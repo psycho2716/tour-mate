@@ -1,8 +1,9 @@
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Calendar, Clock, MapPin, Users } from "lucide-react";
 import { Booking } from "@/components/tourist/booking-details-modal";
+import { CancelBookingModal } from "../tourist/cancel-booking-modal";
 
 const BookingCard = ({
     booking,
@@ -11,8 +12,12 @@ const BookingCard = ({
     booking: Booking;
     setSelectedBooking: (booking: Booking) => void;
 }) => {
-    const handleCancel = (id: number) => {
-        console.log(id);
+    const [showCancelModal, setShowCancelModal] = useState(false);
+
+    const handleCancelBooking = (id: number, reason?: string) => {
+        // Here you would typically make an API call to cancel the booking
+        console.log("Cancelling booking with reason:", reason, id);
+        setShowCancelModal(false);
     };
 
     const handleViewDetails = (booking: Booking) => {
@@ -57,13 +62,21 @@ const BookingCard = ({
                         <Button
                             className="flex-1"
                             variant="destructive"
-                            onClick={() => handleCancel(booking.id)}
+                            onClick={() => setShowCancelModal(true)}
                         >
                             Cancel
                         </Button>
                     ) : null}
                 </div>
             </div>
+
+            <CancelBookingModal
+                isOpen={showCancelModal}
+                onClose={() => setShowCancelModal(false)}
+                handleCancelBooking={handleCancelBooking}
+                bookingDate={new Date(booking.date)}
+                bookingId={booking.id}
+            />
         </div>
     );
 };

@@ -6,6 +6,7 @@ import { MapPin, Loader2 } from "lucide-react";
 import { destinations } from "@/data/destinations";
 import MapComponent from "../common/map";
 import { useExploreMap } from "@/hooks/use-explore-map";
+import Image from "next/image";
 
 const libraries: "places"[] = ["places"];
 
@@ -17,7 +18,6 @@ export function ExploreMapSection() {
     });
 
     const {
-        mapRef,
         selectedMarker,
         placePhoto,
         isLocating,
@@ -116,9 +116,11 @@ export function ExploreMapSection() {
                         <div className="max-w-[290px] p-2 px-1">
                             {placePhoto && (
                                 <div className="w-full h-full max-h-[180px] relative mb-3 overflow-hidden rounded-lg">
-                                    <img
+                                    <Image
                                         src={placePhoto}
                                         alt={selectedMarker.name}
+                                        width={290}
+                                        height={180}
                                         className="w-full h-full object-cover"
                                     />
                                 </div>
