@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 import { EventsTable } from "@/components/admin/events/EventsTable";
-import { AddEventModal } from "@/components/admin/events/AddEventModal";
+import { AddEventModal, EventFormData } from "@/components/admin/events/AddEventModal";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 
 export default function EventsPage() {
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
-    const handleAddEvent = (data: any) => {
+    const handleAddEvent = (data: EventFormData) => {
         // TODO: Implement API call to add event
         console.log("Adding event:", data);
     };

@@ -5,13 +5,19 @@ import { DestinationsTable } from "@/components/admin/destinations/DestinationsT
 import { AddDestinationModal } from "@/components/admin/destinations/AddDestinationModal";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
+import { DestinationCategory } from "@/data/destinations";
 
 interface DestinationFormData {
     name: string;
     description: string;
     location: string;
-    category: string;
-    status: "Active" | "Inactive" | "Under Maintenance";
+    category: DestinationCategory;
+    openingHours: string;
+    closingHours: string;
+    guides: { value: string; label: string }[];
+    keywords: string[];
+    coordinates?: { lat: number; lng: number };
+    priceRange: [number, number];
 }
 
 export default function DestinationsPage() {

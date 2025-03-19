@@ -25,7 +25,7 @@ interface AddEventModalProps {
     onSubmit: (data: EventFormData) => void;
 }
 
-interface EventFormData {
+export interface EventFormData {
     title: string;
     description: string;
     date: string;
