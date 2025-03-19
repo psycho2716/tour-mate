@@ -14,10 +14,9 @@ import {
 import { Label } from "@/components/ui/label";
 import Image from "next/image";
 import React from "react";
-import { Check, ChevronsUpDown, X } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { toast } from "sonner";
+import { Combobox } from "@/components/ui/combobox";
+import { X } from "lucide-react";
 
 interface AddTourGuideModalProps {
     isOpen: boolean;
@@ -96,8 +95,6 @@ const availableLanguages = [
 export function AddTourGuideModal({ isOpen, onClose, onSubmit }: AddTourGuideModalProps) {
     const [imagePreview, setImagePreview] = React.useState<string | null>(null);
     const fileInputRef = React.useRef<HTMLInputElement>(null);
-    const [languagesOpen, setLanguagesOpen] = React.useState(false);
-    const [searchQuery, setSearchQuery] = React.useState("");
 
     const { formState, setFieldValue, validateForm, resetForm } =
         useForm<TourGuideFormData>(initialFormState);
@@ -127,7 +124,6 @@ export function AddTourGuideModal({ isOpen, onClose, onSubmit }: AddTourGuideMod
             });
             resetForm();
             setImagePreview(null);
-            setLanguagesOpen(false);
             toast.success("Tour guide added successfully");
             onClose();
         }
@@ -255,104 +251,19 @@ export function AddTourGuideModal({ isOpen, onClose, onSubmit }: AddTourGuideMod
 
                 <div className="relative space-y-2">
                     <Label htmlFor="languages">Languages</Label>
-                    <Popover open={languagesOpen} onOpenChange={setLanguagesOpen}>
-                        <PopoverTrigger asChild>
-                            <Button
-                                variant="outline"
-                                role="combobox"
-                                aria-expanded={languagesOpen}
-                                className="w-full justify-between"
-                            >
-                                {formState.languages.value.length > 0
-                                    ? `${formState.languages.value.length} selected`
-                                    : "Select languages..."}
-                                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                            </Button>
-                        </PopoverTrigger>
-
-                        <PopoverContent className="min-h-[300px] w-[450px] p-0 overflow-y-auto">
-                            <div className="w-full h-full">
-                                <div className="flex flex-col">
-                                    <input
-                                        className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 sticky top-0 z-50 bg-white"
-                                        placeholder="Search languages..."
-                                        value={searchQuery}
-                                        onChange={(e) => setSearchQuery(e.target.value)}
-                                    />
-                                    <div className="h-full">
-                                        {availableLanguages
-                                            .filter((language) =>
-                                                language
-                                                    .toLowerCase()
-                                                    .includes(searchQuery.toLowerCase())
-                                            )
-                                            .map((language) => (
-                                                <div
-                                                    key={language}
-                                                    className={cn(
-                                                        "relative flex w-full cursor-pointer select-none items-center rounded-sm py-1.5 px-2 text-sm outline-none hover:bg-accent hover:text-accent-foreground",
-                                                        formState.languages.value.includes(
-                                                            language
-                                                        ) && "bg-accent"
-                                                    )}
-                                                    onClick={() => {
-                                                        const currentValues =
-                                                            formState.languages.value;
-                                                        const newValues = currentValues.includes(
-                                                            language
-                                                        )
-                                                            ? currentValues.filter(
-                                                                  (l) => l !== language
-                                                              )
-                                                            : [...currentValues, language];
-                                                        setFieldValue("languages", newValues);
-                                                    }}
-                                                >
-                                                    {language}
-                                                    <Check
-                                                        className={cn(
-                                                            "ml-auto h-4 w-4",
-                                                            formState.languages.value.includes(
-                                                                language
-                                                            )
-                                                                ? "opacity-100"
-                                                                : "opacity-0"
-                                                        )}
-                                                    />
-                                                </div>
-                                            ))}
-                                    </div>
-                                </div>
-                            </div>
-                        </PopoverContent>
-                    </Popover>
-
-                    {formState.languages.value.length > 0 && (
-                        <div className="flex flex-wrap gap-2 mt-2">
-                            {formState.languages.value.map((language) => (
-                                <div
-                                    key={language}
-                                    className="flex items-center gap-1 bg-secondary text-secondary-foreground px-2 py-1 rounded-md"
-                                >
-                                    {language}
-                                    <button
-                                        type="button"
-                                        onClick={() => {
-                                            setFieldValue(
-                                                "languages",
-                                                formState.languages.value.filter(
-                                                    (l) => l !== language
-                                                )
-                                            );
-                                        }}
-                                        className="text-secondary-foreground/50 hover:text-secondary-foreground"
-                                    >
-                                        <X className="h-3 w-3" />
-                                    </button>
-                                </div>
-                            ))}
-                        </div>
-                    )}
+                    <Combobox
+                        options={availableLanguages.map((language) => ({
+                            value: language,
+                            label: language
+                        }))}
+                        value={formState.languages.value}
+                        onChange={(value) => setFieldValue("languages", value as string[])}
+                        multiSelect
+                        searchPlaceholder="Search for a language"
+                        placeholder="Select languages"
+                        emptyMessage="No languages found"
+                        className="w-full"
+                    />
 
                     {formState.languages.error && (
                         <p className="text-sm text-red-500">{formState.languages.error}</p>

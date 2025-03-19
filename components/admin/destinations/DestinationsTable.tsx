@@ -11,35 +11,22 @@ import {
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Pencil, Trash2 } from "lucide-react";
-
-type Destination = {
-    id: string;
-    name: string;
-    description: string;
-    location: string;
-    category: string;
-    status: "Active" | "Inactive" | "Under Maintenance";
-};
+import { Pencil, Trash2, Star } from "lucide-react";
+import { destinations, Destination } from "@/data/destinations";
+import Image from "next/image";
+import { DeleteDestinationDialog } from "./DeleteDestinationDialog";
+import { EditDestinationModal } from "./EditDestinationModal";
 
 const ITEMS_PER_PAGE = 10;
 
 export function DestinationsTable() {
     const [searchQuery, setSearchQuery] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
-
-    // Mock data - replace with actual API call
-    const destinations: Destination[] = [
-        {
-            id: "1",
-            name: "Bon Bon Beach",
-            description: "Romblon's white sand beach",
-            location: "Brgy. Lonos, Romblon, Romblon",
-            category: "Beach",
-            status: "Active"
-        }
-        // Add more mock data as needed
-    ];
+    const [selectedDestination, setSelectedDestination] = useState<(typeof destinations)[0] | null>(
+        null
+    );
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
     const filteredDestinations = destinations.filter((destination) =>
         destination.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -51,6 +38,28 @@ export function DestinationsTable() {
         startIndex,
         startIndex + ITEMS_PER_PAGE
     );
+
+    const handleEdit = (destination: (typeof destinations)[0]) => {
+        setSelectedDestination(destination);
+        setIsEditModalOpen(true);
+    };
+
+    const handleDelete = (destination: (typeof destinations)[0]) => {
+        setSelectedDestination(destination);
+        setIsDeleteDialogOpen(true);
+    };
+
+    const handleUpdateDestination = (id: string, data: Omit<Destination, "id" | "imgUrl">) => {
+        // TODO: Implement update destination logic
+        console.log("Updating destination:", id, data);
+    };
+
+    const handleDeleteDestination = () => {
+        if (selectedDestination) {
+            // TODO: Implement delete destination logic
+            console.log("Deleting destination:", selectedDestination.id);
+        }
+    };
 
     return (
         <div className="space-y-4">
@@ -67,40 +76,59 @@ export function DestinationsTable() {
                 <Table>
                     <TableHeader>
                         <TableRow>
+                            <TableHead></TableHead>
                             <TableHead>Name</TableHead>
-                            <TableHead>Description</TableHead>
                             <TableHead>Location</TableHead>
                             <TableHead>Category</TableHead>
-                            <TableHead>Status</TableHead>
+                            <TableHead>Keywords</TableHead>
+                            <TableHead>Rating</TableHead>
+                            <TableHead>Opening Hours</TableHead>
+                            <TableHead>Closing Hours</TableHead>
                             <TableHead className="w-[100px]">Actions</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
                         {paginatedDestinations.map((destination) => (
                             <TableRow key={destination.id}>
-                                <TableCell>{destination.name}</TableCell>
-                                <TableCell>{destination.description}</TableCell>
-                                <TableCell>{destination.location}</TableCell>
-                                <TableCell>{destination.category}</TableCell>
                                 <TableCell>
-                                    <span
-                                        className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${
-                                            destination.status === "Active"
-                                                ? "bg-green-100 text-green-800"
-                                                : destination.status === "Inactive"
-                                                ? "bg-gray-100 text-gray-800"
-                                                : "bg-yellow-100 text-yellow-800"
-                                        }`}
-                                    >
-                                        {destination.status}
+                                    <Image
+                                        src={destination.imgUrl}
+                                        alt={destination.name}
+                                        width={100}
+                                        height={100}
+                                        className="h-20 w-40 rounded-md object-cover"
+                                    />
+                                </TableCell>
+                                <TableCell className="font-medium">{destination.name}</TableCell>
+                                <TableCell>{destination.location}</TableCell>
+                                <TableCell>
+                                    <span className="inline-flex rounded-full px-2 text-xs font-semibold leading-5 bg-blue-100 text-slate-800">
+                                        {destination.category}
                                     </span>
                                 </TableCell>
+                                <TableCell>{destination.keywords.join(", ")}</TableCell>
+                                <TableCell>
+                                    <span className="inline-flex items-center">
+                                        {destination.rating}
+                                        <Star className="ml-1 h-4 w-4 fill-yellow-400 text-yellow-400" />
+                                    </span>
+                                </TableCell>
+                                <TableCell>{destination.openingHours}</TableCell>
+                                <TableCell>{destination.closingHours}</TableCell>
                                 <TableCell>
                                     <div className="flex space-x-2">
-                                        <Button variant="ghost" size="icon">
+                                        <Button
+                                            variant="ghost"
+                                            size="icon"
+                                            onClick={() => handleEdit(destination)}
+                                        >
                                             <Pencil className="h-4 w-4" />
                                         </Button>
-                                        <Button variant="ghost" size="icon">
+                                        <Button
+                                            variant="ghost"
+                                            size="icon"
+                                            onClick={() => handleDelete(destination)}
+                                        >
                                             <Trash2 className="h-4 w-4" />
                                         </Button>
                                     </div>
@@ -133,6 +161,29 @@ export function DestinationsTable() {
                         Next
                     </Button>
                 </div>
+            )}
+
+            {selectedDestination && (
+                <>
+                    <EditDestinationModal
+                        isOpen={isEditModalOpen}
+                        onClose={() => {
+                            setIsEditModalOpen(false);
+                            setSelectedDestination(null);
+                        }}
+                        onSubmit={handleUpdateDestination}
+                        destination={selectedDestination}
+                    />
+                    <DeleteDestinationDialog
+                        isOpen={isDeleteDialogOpen}
+                        onClose={() => {
+                            setIsDeleteDialogOpen(false);
+                            setSelectedDestination(null);
+                        }}
+                        onConfirm={handleDeleteDestination}
+                        destinationName={selectedDestination.name}
+                    />
+                </>
             )}
         </div>
     );
