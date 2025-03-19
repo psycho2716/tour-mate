@@ -17,6 +17,7 @@ export interface Destination {
     imgUrl: string;
     openingHours: string;
     closingHours: string;
+    priceRange: string;
     guides: { id: string }[];
     coordinates: {
         lat: number;
@@ -46,6 +47,7 @@ export const destinations: Destination[] = [
         imgUrl: "/images/destinations/bonbon.jpg",
         openingHours: "7:00 AM",
         closingHours: "5:00 PM",
+        priceRange: "₱0 - ₱500",
         guides: [{ id: "1" }, { id: "2" }],
         coordinates: {
             lat: 12.578737019901709,
@@ -63,6 +65,7 @@ export const destinations: Destination[] = [
         imgUrl: "/images/destinations/fuerza.jpg",
         openingHours: "9:00 AM",
         closingHours: "5:00 PM",
+        priceRange: "₱0 - ₱100",
         guides: [{ id: "2" }, { id: "3" }],
         coordinates: {
             lat: 12.578737019901709,

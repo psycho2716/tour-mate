@@ -82,6 +82,7 @@ export function DestinationsTable() {
                             <TableHead>Category</TableHead>
                             <TableHead>Keywords</TableHead>
                             <TableHead>Rating</TableHead>
+                            <TableHead>Price Range</TableHead>
                             <TableHead>Opening Hours</TableHead>
                             <TableHead>Closing Hours</TableHead>
                             <TableHead className="w-[100px]">Actions</TableHead>
@@ -113,6 +114,7 @@ export function DestinationsTable() {
                                         <Star className="ml-1 h-4 w-4 fill-yellow-400 text-yellow-400" />
                                     </span>
                                 </TableCell>
+                                <TableCell>{destination.priceRange}</TableCell>
                                 <TableCell>{destination.openingHours}</TableCell>
                                 <TableCell>{destination.closingHours}</TableCell>
                                 <TableCell>

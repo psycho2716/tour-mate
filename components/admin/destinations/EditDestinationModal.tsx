@@ -20,6 +20,8 @@ import { Destination, destinationCategories, DestinationCategory } from "@/data/
 import { toast } from "sonner";
 import tourGuides from "@/data/tour-guides";
 import { Combobox } from "@/components/ui/combobox";
+import { Slider } from "@/components/ui/slider";
+import { cn } from "@/lib/utils";
 
 interface EditDestinationModalProps {
     isOpen: boolean;
@@ -103,6 +105,13 @@ export function EditDestinationModal({
             value: null as File | null,
             error: null,
             rules: { required: false }
+        },
+        priceRange: {
+            value: Array.isArray(destination.priceRange)
+                ? destination.priceRange
+                : ([0, 5000] as [number, number]),
+            error: null,
+            rules: { required: true }
         }
     };
 
@@ -123,6 +132,7 @@ export function EditDestinationModal({
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (validateForm()) {
+            const [min, max] = formState.priceRange.value as [number, number];
             onSubmit(destination.id, {
                 name: formState.name.value,
                 description: formState.description.value,
@@ -132,13 +142,21 @@ export function EditDestinationModal({
                 closingHours: formState.closingHours.value,
                 guides: formState.guides.value,
                 keywords: formState.keywords.value.split(",").map((f) => f.trim()),
-                coordinates: destination.coordinates
+                coordinates: destination.coordinates,
+                priceRange: `${formatPrice(min)} - ${formatPrice(max)}`
             });
             resetForm();
             setImagePreview(destination.imgUrl);
             onClose();
             toast.success("Destination updated successfully");
         }
+    };
+
+    const formatPrice = (value: number) => {
+        return new Intl.NumberFormat("en-PH", {
+            style: "currency",
+            currency: "PHP"
+        }).format(value);
     };
 
     return (
@@ -242,7 +260,7 @@ export function EditDestinationModal({
                     </div>
 
                     <div className="space-y-2">
-                        <Label htmlFor="type">Type</Label>
+                        <Label htmlFor="type">Category</Label>
                         <Select
                             value={formState.category.value}
                             onValueChange={(value: DestinationCategory) =>
@@ -264,6 +282,76 @@ export function EditDestinationModal({
                             <p className="text-sm text-red-500">{formState.category.error}</p>
                         )}
                     </div>
+                </div>
+
+                <div className="space-y-4">
+                    <div className="flex justify-between items-center gap-4">
+                        <Label htmlFor="priceRange">Price Range</Label>
+                        <div className="flex items-center gap-2 text-sm">
+                            <Input
+                                type="number"
+                                min={0}
+                                max={10000}
+                                step={100}
+                                value={(formState.priceRange.value as [number, number])[0]}
+                                onChange={(e) => {
+                                    const newValue = parseInt(e.target.value);
+                                    const maxValue = (
+                                        formState.priceRange.value as [number, number]
+                                    )[1];
+                                    if (!isNaN(newValue) && newValue <= maxValue) {
+                                        setFieldValue("priceRange", [newValue, maxValue] as [
+                                            number,
+                                            number
+                                        ]);
+                                    }
+                                }}
+                                className="w-24 h-8 text-right"
+                            />
+                            <span className="text-muted-foreground">to</span>
+                            <Input
+                                type="number"
+                                min={0}
+                                max={10000}
+                                step={100}
+                                value={(formState.priceRange.value as [number, number])[1]}
+                                onChange={(e) => {
+                                    const newValue = parseInt(e.target.value);
+                                    const minValue = (
+                                        formState.priceRange.value as [number, number]
+                                    )[0];
+                                    if (!isNaN(newValue) && newValue >= minValue) {
+                                        setFieldValue("priceRange", [minValue, newValue] as [
+                                            number,
+                                            number
+                                        ]);
+                                    }
+                                }}
+                                className="w-24 h-8 text-right"
+                            />
+                        </div>
+                    </div>
+                    <div className="relative pt-1">
+                        <Slider
+                            id="priceRange"
+                            min={0}
+                            max={10000}
+                            step={100}
+                            value={formState.priceRange.value as [number, number]}
+                            onValueChange={(value) =>
+                                setFieldValue("priceRange", value as [number, number])
+                            }
+                            className={cn(
+                                "w-full",
+                                (formState.priceRange.value as [number, number])[0] === 0 &&
+                                    (formState.priceRange.value as [number, number])[1] === 0 &&
+                                    "before:bg-transparent"
+                            )}
+                        />
+                    </div>
+                    {formState.priceRange.error && (
+                        <p className="text-sm text-red-500">{formState.priceRange.error}</p>
+                    )}
                 </div>
 
                 <div>

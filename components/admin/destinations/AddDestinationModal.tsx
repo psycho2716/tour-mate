@@ -20,6 +20,7 @@ import { destinationCategories, DestinationCategory } from "@/data/destinations"
 import { toast } from "sonner";
 import tourGuides from "@/data/tour-guides";
 import { Combobox } from "@/components/ui/combobox";
+import { Slider } from "@/components/ui/slider";
 
 interface AddDestinationModalProps {
     isOpen: boolean;
@@ -37,6 +38,7 @@ interface DestinationFormData {
     guides: { value: string; label: string }[];
     keywords: string[];
     coordinates?: { lat: number; lng: number };
+    priceRange: [number, number];
 }
 
 type DestinationFormState = {
@@ -94,6 +96,11 @@ const initialFormState: DestinationFormState = {
         value: null,
         error: null,
         rules: { required: false }
+    },
+    priceRange: {
+        value: [0, 5000] as [number, number],
+        error: null,
+        rules: { required: true }
     }
 };
 
@@ -116,7 +123,8 @@ export function AddDestinationModal({ isOpen, onClose, onSubmit }: AddDestinatio
                 closingHours: formState.closingHours.value as string,
                 guides: formState.guides.value as { value: string; label: string }[],
                 keywords: formState.keywords.value as string[],
-                coordinates: formState.coordinates?.value
+                coordinates: formState.coordinates?.value,
+                priceRange: formState.priceRange.value as [number, number]
             };
             onSubmit(formData);
             resetForm();
@@ -136,6 +144,13 @@ export function AddDestinationModal({ isOpen, onClose, onSubmit }: AddDestinatio
             };
             reader.readAsDataURL(file);
         }
+    };
+
+    const formatPrice = (value: number) => {
+        return new Intl.NumberFormat("en-PH", {
+            style: "currency",
+            currency: "PHP"
+        }).format(value);
     };
 
     return (
@@ -259,6 +274,30 @@ export function AddDestinationModal({ isOpen, onClose, onSubmit }: AddDestinatio
                             <p className="text-sm text-red-500">{formState.category.error}</p>
                         )}
                     </div>
+                </div>
+
+                <div className="space-y-4">
+                    <div className="flex justify-between items-center">
+                        <Label htmlFor="priceRange">Price Range</Label>
+                        <span className="text-sm text-muted-foreground">
+                            {formatPrice(formState.priceRange.value[0])} -{" "}
+                            {formatPrice(formState.priceRange.value[1])}
+                        </span>
+                    </div>
+                    <Slider
+                        id="priceRange"
+                        min={0}
+                        max={10000}
+                        step={100}
+                        value={formState.priceRange.value}
+                        onValueChange={(value) =>
+                            setFieldValue("priceRange", value as [number, number])
+                        }
+                        className="w-full"
+                    />
+                    {formState.priceRange.error && (
+                        <p className="text-sm text-red-500">{formState.priceRange.error}</p>
+                    )}
                 </div>
 
                 <div>
