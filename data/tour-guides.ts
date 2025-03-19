@@ -1,32 +1,44 @@
-interface TourGuide {
+export interface TourGuide {
     id: string;
     name: string;
-    rating: number;
+    email: string;
+    phoneNumber: string;
     specialization: string;
-    imageUrl: string;
+    languages: string[];
+    rating: number;
+    avatar: string;
 }
 
 const tourGuides: TourGuide[] = [
     {
         id: "1",
         name: "John Smith",
-        rating: 4.3,
+        email: "john@gmail.com",
+        phoneNumber: "09278872642",
         specialization: "Historical Tours",
-        imageUrl: ""
+        languages: ["English", "Tagalog"],
+        avatar: "/images/tour-guides/sample-profile.jpg",
+        rating: 4.2
     },
     {
         id: "2",
         name: "Jane Doe",
-        rating: 4.3,
+        email: "jane@gmail.com",
+        phoneNumber: "092788726442",
         specialization: "Educational Tours",
-        imageUrl: ""
+        languages: ["English", "Tagalog"],
+        avatar: "/images/tour-guides/sample-profile.jpg",
+        rating: 4.3
     },
     {
         id: "3",
         name: "Michael Dela Cruz",
-        rating: 4.3,
+        email: "michael@gmail.com",
+        phoneNumber: "092788726442",
         specialization: "Landmark Tours",
-        imageUrl: ""
+        languages: ["English", "Tagalog"],
+        avatar: "/images/tour-guides/sample-profile.jpg",
+        rating: 4.1
     }
 ];
 
