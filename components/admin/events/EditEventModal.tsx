@@ -107,12 +107,12 @@ export function EditEventModal({ isOpen, onClose, onSubmit, event }: EditEventMo
 
     return (
         <ModalForm isOpen={isOpen} onClose={onClose} title="Edit Event">
-            <form onSubmit={handleSubmit} className="space-y-2">
+            <form onSubmit={handleSubmit} className="space-y-4 max-h-[80vh] overflow-y-auto">
                 <div className="space-y-2">
                     <Label>Event Image</Label>
                     <div
                         onClick={() => fileInputRef.current?.click()}
-                        className={`w-full h-48 rounded-md ${
+                        className={`w-full h-36 sm:h-48 rounded-md ${
                             !imagePreview ? "border-2" : ""
                         } border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer overflow-hidden relative flex items-center justify-center`}
                     >
@@ -192,7 +192,7 @@ export function EditEventModal({ isOpen, onClose, onSubmit, event }: EditEventMo
                     )}
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
                         <Label htmlFor="date">Date</Label>
                         <Input
@@ -231,7 +231,7 @@ export function EditEventModal({ isOpen, onClose, onSubmit, event }: EditEventMo
                     </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
                         <Label htmlFor="location">Location</Label>
                         <Input
@@ -266,11 +266,18 @@ export function EditEventModal({ isOpen, onClose, onSubmit, event }: EditEventMo
                     </div>
                 </div>
 
-                <div className="flex justify-end space-x-2 pt-4">
-                    <Button type="button" variant="outline" onClick={onClose}>
+                <div className="flex flex-col sm:flex-row justify-end gap-2 sm:gap-2 pt-4">
+                    <Button
+                        type="button"
+                        variant="outline"
+                        onClick={onClose}
+                        className="w-full sm:w-auto"
+                    >
                         Cancel
                     </Button>
-                    <Button type="submit">Update Event</Button>
+                    <Button type="submit" className="w-full sm:w-auto">
+                        Update Event
+                    </Button>
                 </div>
             </form>
         </ModalForm>

@@ -44,14 +44,11 @@ export function RegisterForm() {
             console.log("Registration attempt with:", { fullName, email, password });
 
             // Show success message
-            toast("Registration successful", {
+            toast.success("Registration successful", {
                 description: "Your account has been created. Redirecting to login..."
             });
 
-            // Redirect to login page after a short delay
-            setTimeout(() => {
-                router.push("/login");
-            }, 1500);
+            router.push("/login");
         }, 1500);
     };
 

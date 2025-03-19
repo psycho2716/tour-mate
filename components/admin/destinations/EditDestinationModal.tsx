@@ -143,12 +143,12 @@ export function EditDestinationModal({
 
     return (
         <ModalForm isOpen={isOpen} onClose={onClose} title="Edit Destination">
-            <form onSubmit={handleSubmit} className="space-y-3">
+            <form onSubmit={handleSubmit} className="space-y-4 max-h-[80vh] overflow-y-auto">
                 <div className="space-y-2">
                     <Label>Destination Image</Label>
                     <div
                         onClick={() => fileInputRef.current?.click()}
-                        className={`w-full h-32 rounded-md ${
+                        className={`w-full h-36 sm:h-48 rounded-md ${
                             !imagePreview ? "border-2" : ""
                         } border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer overflow-hidden relative flex items-center justify-center`}
                     >
@@ -228,7 +228,7 @@ export function EditDestinationModal({
                     )}
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
                         <Label htmlFor="location">Location</Label>
                         <Input
@@ -268,7 +268,7 @@ export function EditDestinationModal({
 
                 <div>
                     <Label htmlFor="workingHours">Working Hours</Label>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div className="space-y-2">
                             <Label htmlFor="openingHours" className="text-xs text-gray-500">
                                 From
@@ -360,11 +360,18 @@ export function EditDestinationModal({
                     )}
                 </div>
 
-                <div className="flex justify-end space-x-2 pt-4">
-                    <Button type="button" variant="outline" onClick={onClose}>
+                <div className="flex flex-col sm:flex-row justify-end gap-2 sm:gap-2 pt-4">
+                    <Button
+                        type="button"
+                        variant="outline"
+                        onClick={onClose}
+                        className="w-full sm:w-auto"
+                    >
                         Cancel
                     </Button>
-                    <Button type="submit">Update Destination</Button>
+                    <Button type="submit" className="w-full sm:w-auto">
+                        Update Destination
+                    </Button>
                 </div>
             </form>
         </ModalForm>

@@ -131,12 +131,12 @@ export function AddTourGuideModal({ isOpen, onClose, onSubmit }: AddTourGuideMod
 
     return (
         <ModalForm isOpen={isOpen} onClose={onClose} title="Add New Tour Guide">
-            <form onSubmit={handleSubmit} className="space-y-2">
+            <form onSubmit={handleSubmit} className="space-y-4 max-h-[80vh] overflow-y-auto">
                 <div className="space-y-2">
                     <Label>Profile Image</Label>
                     <div className="flex flex-col items-center gap-4">
                         {imagePreview ? (
-                            <div className="relative w-32 h-32">
+                            <div className="relative w-24 sm:w-32 h-24 sm:h-32">
                                 <div className="w-full h-full rounded-full overflow-hidden">
                                     <Image
                                         src={imagePreview}
@@ -162,7 +162,7 @@ export function AddTourGuideModal({ isOpen, onClose, onSubmit }: AddTourGuideMod
                                 </button>
                             </div>
                         ) : (
-                            <div className="w-32 h-32 rounded-full border-2 border-dashed border-gray-300 flex items-center justify-center bg-gray-50">
+                            <div className="w-24 sm:w-32 h-24 sm:h-32 rounded-full border-2 border-dashed border-gray-300 flex items-center justify-center bg-gray-50">
                                 <span className="text-gray-500">No image</span>
                             </div>
                         )}
@@ -189,64 +189,68 @@ export function AddTourGuideModal({ isOpen, onClose, onSubmit }: AddTourGuideMod
                     )}
                 </div>
 
-                <div className="space-y-2">
-                    <Label htmlFor="name">Name</Label>
-                    <Input
-                        id="name"
-                        value={formState.name.value}
-                        onChange={(e) => setFieldValue("name", e.target.value)}
-                    />
-                    {formState.name.error && (
-                        <p className="text-sm text-red-500">{formState.name.error}</p>
-                    )}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                        <Label htmlFor="name">Name</Label>
+                        <Input
+                            id="name"
+                            value={formState.name.value}
+                            onChange={(e) => setFieldValue("name", e.target.value)}
+                        />
+                        {formState.name.error && (
+                            <p className="text-sm text-red-500">{formState.name.error}</p>
+                        )}
+                    </div>
+
+                    <div className="space-y-2">
+                        <Label htmlFor="email">Email</Label>
+                        <Input
+                            id="email"
+                            type="email"
+                            value={formState.email.value}
+                            onChange={(e) => setFieldValue("email", e.target.value)}
+                        />
+                        {formState.email.error && (
+                            <p className="text-sm text-red-500">{formState.email.error}</p>
+                        )}
+                    </div>
                 </div>
 
-                <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input
-                        id="email"
-                        type="email"
-                        value={formState.email.value}
-                        onChange={(e) => setFieldValue("email", e.target.value)}
-                    />
-                    {formState.email.error && (
-                        <p className="text-sm text-red-500">{formState.email.error}</p>
-                    )}
-                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                        <Label htmlFor="phoneNumber">Phone Number</Label>
+                        <Input
+                            id="phoneNumber"
+                            placeholder="09123456789"
+                            value={formState.phoneNumber.value}
+                            onChange={(e) => setFieldValue("phoneNumber", e.target.value)}
+                        />
+                        {formState.phoneNumber.error && (
+                            <p className="text-sm text-red-500">{formState.phoneNumber.error}</p>
+                        )}
+                    </div>
 
-                <div className="space-y-2">
-                    <Label htmlFor="phoneNumber">Phone Number</Label>
-                    <Input
-                        id="phoneNumber"
-                        placeholder="09123456789"
-                        value={formState.phoneNumber.value}
-                        onChange={(e) => setFieldValue("phoneNumber", e.target.value)}
-                    />
-                    {formState.phoneNumber.error && (
-                        <p className="text-sm text-red-500">{formState.phoneNumber.error}</p>
-                    )}
-                </div>
-
-                <div className="space-y-2">
-                    <Label htmlFor="specialization">Specialization</Label>
-                    <Select
-                        value={formState.specialization.value}
-                        onValueChange={(value) => setFieldValue("specialization", value)}
-                    >
-                        <SelectTrigger>
-                            <SelectValue placeholder="Select specialization" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {specializations.map((spec) => (
-                                <SelectItem key={spec} value={spec}>
-                                    {spec}
-                                </SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
-                    {formState.specialization.error && (
-                        <p className="text-sm text-red-500">{formState.specialization.error}</p>
-                    )}
+                    <div className="space-y-2">
+                        <Label htmlFor="specialization">Specialization</Label>
+                        <Select
+                            value={formState.specialization.value}
+                            onValueChange={(value) => setFieldValue("specialization", value)}
+                        >
+                            <SelectTrigger>
+                                <SelectValue placeholder="Select specialization" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {specializations.map((spec) => (
+                                    <SelectItem key={spec} value={spec}>
+                                        {spec}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                        {formState.specialization.error && (
+                            <p className="text-sm text-red-500">{formState.specialization.error}</p>
+                        )}
+                    </div>
                 </div>
 
                 <div className="relative space-y-2">
@@ -270,11 +274,18 @@ export function AddTourGuideModal({ isOpen, onClose, onSubmit }: AddTourGuideMod
                     )}
                 </div>
 
-                <div className="flex justify-end space-x-2 pt-4">
-                    <Button type="button" variant="outline" onClick={onClose}>
+                <div className="flex flex-col sm:flex-row justify-end gap-2 sm:gap-2 pt-4">
+                    <Button
+                        type="button"
+                        variant="outline"
+                        onClick={onClose}
+                        className="w-full sm:w-auto"
+                    >
                         Cancel
                     </Button>
-                    <Button type="submit">Add Tour Guide</Button>
+                    <Button type="submit" className="w-full sm:w-auto">
+                        Add Tour Guide
+                    </Button>
                 </div>
             </form>
         </ModalForm>
