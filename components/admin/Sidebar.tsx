@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Calendar, MapPin, Users, UserCog, LogOut } from "lucide-react";
+import { Calendar, MapPin, Users, UserCog, LogOut, Home } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
 const navigation = [
+    { name: "Dashboard", href: "/admin", icon: Home },
     { name: "Events", href: "/admin/events", icon: Calendar },
     { name: "Destinations", href: "/admin/destinations", icon: MapPin },
     { name: "Tourists Logs", href: "/admin/tourists", icon: Users },
