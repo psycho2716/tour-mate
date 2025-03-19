@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Calendar, Clock, MapPin, MessageCircleMore, Users } from "lucide-react";
-import { Card } from "@/components/ui/card";
+import { CardComponent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { BookingStatus } from "@/types/types";
 import { Booking } from "@/types/types";
@@ -48,7 +48,7 @@ const BookingCard = ({
 
     return (
         <>
-            <Card
+            <CardComponent
                 image={{
                     src: booking.image,
                     alt: booking.title,
@@ -57,18 +57,9 @@ const BookingCard = ({
                 title={booking.title}
                 className={className}
                 details={[
-                    {
-                        icon: <MapPin size={20} />,
-                        text: booking.location
-                    },
-                    {
-                        icon: <Calendar size={20} />,
-                        text: booking.date
-                    },
-                    {
-                        icon: <Clock size={20} />,
-                        text: booking.time
-                    },
+                    { icon: <MapPin size={20} />, text: booking.location },
+                    { icon: <Calendar size={20} />, text: booking.date },
+                    { icon: <Clock size={20} />, text: booking.time },
                     {
                         icon: <Users size={20} />,
                         text: `${booking.numberOfPeople} ${
@@ -85,62 +76,62 @@ const BookingCard = ({
                                 <AvatarFallback>{booking.tourist.name.charAt(0)}</AvatarFallback>
                             </Avatar>
                         ),
-                        text: `${booking.tourist.name}`
+                        text: booking.tourist.name
                     }
                 ]}
                 actions={
-                    <>
-                        <div className="flex-1 flex items-center">
-                            <span
-                                className={cn(
-                                    "px-2 py-1 rounded-full text-xs font-medium",
-                                    status.className
-                                )}
+                    <div className="w-full flex items-center gap-2">
+                        <span
+                            className={cn(
+                                "px-2 py-1 rounded-full text-xs font-medium",
+                                status.className
+                            )}
+                        >
+                            {status.label}
+                        </span>
+                        {onViewDetails && (
+                            <Button
+                                className="flex-1"
+                                variant="outline"
+                                onClick={() => onViewDetails(booking)}
                             >
-                                {status.label}
-                            </span>
-                        </div>
-
-                        <div className="flex gap-2">
-                            {onViewDetails && (
-                                <Button variant="outline" onClick={() => onViewDetails(booking)}>
-                                    View Details
-                                </Button>
-                            )}
-
-                            {onCancel &&
-                                (booking.status === "pending" ||
-                                    booking.status === "confirmed") && (
-                                    <Button
-                                        variant="destructive"
-                                        onClick={() => setShowCancelModal(true)}
-                                    >
-                                        Cancel
-                                    </Button>
-                                )}
-
-                            {onConfirm && booking.status === "pending" && (
-                                <Button variant="default" onClick={() => setShowConfirmModal(true)}>
-                                    Confirm
-                                </Button>
-                            )}
-
-                            {onReject && booking.status === "pending" && (
+                                View Details
+                            </Button>
+                        )}
+                        {onCancel &&
+                            (booking.status === "pending" || booking.status === "confirmed") && (
                                 <Button
+                                    className="flex-1"
                                     variant="destructive"
-                                    onClick={() => setShowRejectModal(true)}
+                                    onClick={() => setShowCancelModal(true)}
                                 >
-                                    Reject
+                                    Cancel
                                 </Button>
                             )}
-
-                            {onMessage && booking.status === "confirmed" && (
-                                <div className="flex items-center px-3 hover:bg-slate-100 hover:ring-1 ring-slate-300 cursor-pointer rounded-md">
-                                    <MessageCircleMore className="w-6 h-6 text-slate-700" />
-                                </div>
-                            )}
-                        </div>
-                    </>
+                        {onConfirm && booking.status === "pending" && (
+                            <Button
+                                className="flex-1"
+                                variant="default"
+                                onClick={() => setShowConfirmModal(true)}
+                            >
+                                Confirm
+                            </Button>
+                        )}
+                        {onReject && booking.status === "pending" && (
+                            <Button
+                                className="flex-1"
+                                variant="destructive"
+                                onClick={() => setShowRejectModal(true)}
+                            >
+                                Reject
+                            </Button>
+                        )}
+                        {onMessage && booking.status === "confirmed" && (
+                            <div className="flex items-center px-3 hover:bg-slate-100 hover:ring-1 ring-slate-300 cursor-pointer rounded-md">
+                                <MessageCircleMore className="w-6 h-6 text-slate-700" />
+                            </div>
+                        )}
+                    </div>
                 }
             />
 
