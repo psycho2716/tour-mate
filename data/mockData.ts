@@ -28,6 +28,46 @@ const destinations: Destination[] = [
             lat: 12.578737019901709,
             lng: 122.27035859323206
         }
+    },
+    {
+        id: 2,
+        name: "Bonbon Beach",
+        location: "Brgy. Lonos, Romblon, Romblon",
+        description:
+            "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Obcaecati doloremque sint labore laborum perferendis delectus inventore a hic iste vitae.",
+        image: "/images/destinations/bonbon.jpg",
+        rating: 4.8,
+        guides: 4,
+        category: "beach",
+        openingHours: "7:00 AM - 5:00 PM",
+        keywords: [
+            "beach",
+            "romblon",
+            "romblon beach",
+            "romblon beach resort",
+            "romblon beach hotel"
+        ],
+        coordinates: {
+            lat: 12.578737019901709,
+            lng: 122.27035859323206
+        }
+    },
+    {
+        id: 3,
+        name: "Fuerza San Andres",
+        location: "Brgy. 2, Romblon, Romblon",
+        description:
+            "The Twin Forts of Romblon are a pair of Spanish fortifications located in the town of Romblon, Romblon in the Philippines.",
+        image: "/images/destinations/fuerza.jpg",
+        rating: 4.8,
+        guides: 4,
+        category: "landmark",
+        openingHours: "9:00 AM - 5:00 PM",
+        keywords: ["fort", "spanish", "colonial", "history", "romblon"],
+        coordinates: {
+            lat: 12.578737019901709,
+            lng: 122.27035859323206
+        }
     }
 ];
 
