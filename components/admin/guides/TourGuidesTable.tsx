@@ -86,45 +86,55 @@ export function TourGuidesTable() {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {paginatedGuides.map((guide) => (
-                                <TableRow key={guide.id}>
-                                    <TableCell>
-                                        <Avatar>
-                                            <AvatarImage src={guide.avatar} />
-                                            <AvatarFallback>{guide.name.charAt(0)}</AvatarFallback>
-                                        </Avatar>
-                                    </TableCell>
-                                    <TableCell>{guide.name}</TableCell>
-                                    <TableCell>{guide.email}</TableCell>
-                                    <TableCell>(+63) {guide.phoneNumber}</TableCell>
-                                    <TableCell>{guide.specialization}</TableCell>
-                                    <TableCell>{guide.languages.join(", ")}</TableCell>
-                                    <TableCell>
-                                        <div className="flex items-center">
-                                            <span className="text-yellow-500">★</span>
-                                            <span className="ml-1">{guide.rating}</span>
-                                        </div>
-                                    </TableCell>
-                                    <TableCell>
-                                        <div className="flex space-x-2">
-                                            <Button
-                                                variant="ghost"
-                                                size="icon"
-                                                onClick={() => setEditingGuide(guide)}
-                                            >
-                                                <Pencil className="h-4 w-4" />
-                                            </Button>
-                                            <Button
-                                                variant="ghost"
-                                                size="icon"
-                                                onClick={() => setDeletingGuide(guide)}
-                                            >
-                                                <Trash2 className="h-4 w-4" />
-                                            </Button>
-                                        </div>
+                            {filteredGuides.length > 0 ? (
+                                paginatedGuides.map((guide) => (
+                                    <TableRow key={guide.id}>
+                                        <TableCell>
+                                            <Avatar>
+                                                <AvatarImage src={guide.avatar} />
+                                                <AvatarFallback>
+                                                    {guide.name.charAt(0)}
+                                                </AvatarFallback>
+                                            </Avatar>
+                                        </TableCell>
+                                        <TableCell>{guide.name}</TableCell>
+                                        <TableCell>{guide.email}</TableCell>
+                                        <TableCell>(+63) {guide.phoneNumber}</TableCell>
+                                        <TableCell>{guide.specialization}</TableCell>
+                                        <TableCell>{guide.languages.join(", ")}</TableCell>
+                                        <TableCell>
+                                            <div className="flex items-center">
+                                                <span className="text-yellow-500">★</span>
+                                                <span className="ml-1">{guide.rating}</span>
+                                            </div>
+                                        </TableCell>
+                                        <TableCell>
+                                            <div className="flex space-x-2">
+                                                <Button
+                                                    variant="ghost"
+                                                    size="icon"
+                                                    onClick={() => setEditingGuide(guide)}
+                                                >
+                                                    <Pencil className="h-4 w-4" />
+                                                </Button>
+                                                <Button
+                                                    variant="ghost"
+                                                    size="icon"
+                                                    onClick={() => setDeletingGuide(guide)}
+                                                >
+                                                    <Trash2 className="h-4 w-4" />
+                                                </Button>
+                                            </div>
+                                        </TableCell>
+                                    </TableRow>
+                                ))
+                            ) : (
+                                <TableRow>
+                                    <TableCell colSpan={6} className="h-10 text-center">
+                                        No guides found
                                     </TableCell>
                                 </TableRow>
-                            ))}
+                            )}
                         </TableBody>
                     </Table>
                 </div>

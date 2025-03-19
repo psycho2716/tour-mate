@@ -8,6 +8,7 @@ import { format } from "date-fns";
 import React from "react";
 import { activityTypes } from "@/data/mockData";
 import { Textarea } from "@/components/ui/textarea";
+import { ActivityType } from "@/types/types";
 
 interface PreferencesTabProps {
     startDate: Date | undefined;

@@ -16,66 +16,62 @@ import { Label } from "@/components/ui/label";
 import Image from "next/image";
 import { CloudUpload, X } from "lucide-react";
 import React from "react";
-import { EventStatus, categories } from "@/data/events";
+import { Event, EventStatus, categories } from "@/data/events";
 import { toast } from "sonner";
 
-interface AddEventModalProps {
+interface EditEventModalProps {
     isOpen: boolean;
     onClose: () => void;
-    onSubmit: (data: EventFormData) => void;
+    onSubmit: (id: string, data: Omit<Event, "id" | "imgUrl">) => void;
+    event: Event;
 }
 
-interface EventFormData {
-    title: string;
-    description: string;
-    date: string;
-    category: string;
-    location: string;
-    status: EventStatus;
-    image: File | null;
-}
-
-const initialFormState = {
-    title: {
-        value: "",
-        error: null,
-        rules: { required: true }
-    },
-    description: {
-        value: "",
-        error: null,
-        rules: { required: true }
-    },
-    date: {
-        value: "",
-        error: null,
-        rules: { required: true }
-    },
-    category: {
-        value: "",
-        error: null,
-        rules: { required: true }
-    },
-    location: {
-        value: "",
-        error: null,
-        rules: { required: true }
-    },
-    status: {
-        value: "Upcoming" as EventStatus,
-        error: null,
-        rules: { required: true }
-    },
-    image: {
-        value: null as File | null,
-        error: null,
-        rules: { required: true }
-    }
-};
-
-export function AddEventModal({ isOpen, onClose, onSubmit }: AddEventModalProps) {
-    const [imagePreview, setImagePreview] = React.useState<string | null>(null);
+export function EditEventModal({ isOpen, onClose, onSubmit, event }: EditEventModalProps) {
+    const [imagePreview, setImagePreview] = React.useState<string>(event.imgUrl);
     const fileInputRef = React.useRef<HTMLInputElement>(null);
+
+    const initialFormState = {
+        title: {
+            value: event.title,
+            error: null,
+            rules: { required: true }
+        },
+        description: {
+            value: event.description,
+            error: null,
+            rules: { required: true }
+        },
+        date: {
+            value: (() => {
+                const d = new Date(event.date);
+                return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(
+                    d.getDate()
+                ).padStart(2, "0")}`;
+            })(),
+            error: null,
+            rules: { required: true }
+        },
+        category: {
+            value: event.category,
+            error: null,
+            rules: { required: true }
+        },
+        location: {
+            value: event.location,
+            error: null,
+            rules: { required: true }
+        },
+        status: {
+            value: event.status,
+            error: null,
+            rules: { required: true }
+        },
+        image: {
+            value: null as File | null,
+            error: null,
+            rules: { required: false }
+        }
+    };
 
     const { formState, setFieldValue, validateForm, resetForm } = useForm(initialFormState);
 
@@ -94,24 +90,23 @@ export function AddEventModal({ isOpen, onClose, onSubmit }: AddEventModalProps)
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (validateForm()) {
-            onSubmit({
+            onSubmit(event.id, {
                 title: formState.title.value,
                 description: formState.description.value,
                 date: formState.date.value,
                 category: formState.category.value,
                 location: formState.location.value,
-                status: formState.status.value,
-                image: formState.image.value
+                status: formState.status.value
             });
             resetForm();
-            setImagePreview(null);
+            setImagePreview(event.imgUrl);
             onClose();
-            toast.success("Event added successfully");
+            toast.success("Event updated successfully");
         }
     };
 
     return (
-        <ModalForm isOpen={isOpen} onClose={onClose} title="Add New Event">
+        <ModalForm isOpen={isOpen} onClose={onClose} title="Edit Event">
             <form onSubmit={handleSubmit} className="space-y-2">
                 <div className="space-y-2">
                     <Label>Event Image</Label>
@@ -131,25 +126,26 @@ export function AddEventModal({ isOpen, onClose, onSubmit }: AddEventModalProps)
                                     className="w-full h-full object-cover"
                                     unoptimized
                                 />
-                                <button
-                                    type="button"
-                                    className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full hover:bg-red-600"
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        setImagePreview(null);
-                                        setFieldValue("image", null);
-                                        if (fileInputRef.current) {
-                                            fileInputRef.current.value = "";
-                                        }
-                                    }}
-                                >
-                                    <X className="h-4 w-4" />
-                                </button>
+                                {formState.image.value && (
+                                    <button
+                                        type="button"
+                                        className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full hover:bg-red-600"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setImagePreview(event.imgUrl);
+                                            setFieldValue("image", null);
+                                            if (fileInputRef.current) {
+                                                fileInputRef.current.value = "";
+                                            }
+                                        }}
+                                    >
+                                        <X className="h-4 w-4" />
+                                    </button>
+                                )}
                             </>
                         ) : (
                             <div className="flex flex-col items-center justify-center">
                                 <CloudUpload className="h-12 w-12 text-gray-400" />
-
                                 <div className="mt-2 flex text-sm text-gray-600">
                                     <span className="relative rounded-md font-medium text-primary hover:text-primary/80">
                                         Upload Image
@@ -177,7 +173,6 @@ export function AddEventModal({ isOpen, onClose, onSubmit }: AddEventModalProps)
                     <Input
                         id="title"
                         value={formState.title.value}
-                        placeholder="Enter title"
                         onChange={(e) => setFieldValue("title", e.target.value)}
                     />
                     {formState.title.error && (
@@ -190,8 +185,6 @@ export function AddEventModal({ isOpen, onClose, onSubmit }: AddEventModalProps)
                     <Textarea
                         id="description"
                         value={formState.description.value}
-                        placeholder="Enter brief description..."
-                        maxLength={200}
                         onChange={(e) => setFieldValue("description", e.target.value)}
                     />
                     {formState.description.error && (
@@ -244,7 +237,6 @@ export function AddEventModal({ isOpen, onClose, onSubmit }: AddEventModalProps)
                         <Input
                             id="location"
                             value={formState.location.value}
-                            placeholder="Enter location"
                             onChange={(e) => setFieldValue("location", e.target.value)}
                         />
                         {formState.location.error && (
@@ -278,7 +270,7 @@ export function AddEventModal({ isOpen, onClose, onSubmit }: AddEventModalProps)
                     <Button type="button" variant="outline" onClick={onClose}>
                         Cancel
                     </Button>
-                    <Button type="submit">Add Event</Button>
+                    <Button type="submit">Update Event</Button>
                 </div>
             </form>
         </ModalForm>
