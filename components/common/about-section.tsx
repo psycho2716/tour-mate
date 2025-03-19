@@ -1,5 +1,6 @@
 import Image from "next/image";
 import SectionHeader from "./section-header";
+import { aboutUsImage } from "@/data/mockData";
 
 export function AboutSection() {
     return (
@@ -13,12 +14,7 @@ export function AboutSection() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                     <div className="relative h-[400px] rounded-xl overflow-hidden">
-                        <Image
-                            src="/placeholder.svg?height=400&width=600"
-                            alt="Our team"
-                            fill
-                            className="object-cover"
-                        />
+                        <Image src={aboutUsImage} alt="Our team" fill className="object-cover" />
                     </div>
 
                     <div className="space-y-6">
