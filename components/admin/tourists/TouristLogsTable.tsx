@@ -10,15 +10,8 @@ import {
     TableRow
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
-
-type TouristLog = {
-    id: string;
-    name: string;
-    email: string;
-    phoneNumber: string;
-    lastBookedLocation: string;
-    lastActive: string;
-};
+import { users } from "@/data/mockData";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -26,21 +19,10 @@ export function TouristLogsTable() {
     const [searchQuery, setSearchQuery] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
 
-    // Mock data - replace with actual API call
-    const touristLogs: TouristLog[] = [
-        {
-            id: "1",
-            name: "James Doe",
-            email: "james_d@gmail.com",
-            phoneNumber: "(63) 92788726442",
-            lastBookedLocation: "Bon Bon Beach",
-            lastActive: "2025-09-24"
-        }
-        // Add more mock data as needed
-    ];
-
-    const filteredLogs = touristLogs.filter((log) =>
-        log.name.toLowerCase().includes(searchQuery.toLowerCase())
+    const filteredLogs = users.filter(
+        (log) =>
+            log.type === "tourist" &&
+            log.lastBookedLocation?.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     const totalPages = Math.ceil(filteredLogs.length / ITEMS_PER_PAGE);
@@ -62,6 +44,7 @@ export function TouristLogsTable() {
                 <Table>
                     <TableHeader>
                         <TableRow>
+                            <TableHead></TableHead>
                             <TableHead>Name</TableHead>
                             <TableHead>Email</TableHead>
                             <TableHead>Phone Number</TableHead>
@@ -72,10 +55,16 @@ export function TouristLogsTable() {
                     <TableBody>
                         {paginatedLogs.map((log) => (
                             <TableRow key={log.id}>
+                                <TableCell>
+                                    <Avatar>
+                                        <AvatarImage src={log.avatar} />
+                                        <AvatarFallback>{log.name.charAt(0)}</AvatarFallback>
+                                    </Avatar>
+                                </TableCell>
                                 <TableCell>{log.name}</TableCell>
                                 <TableCell>{log.email}</TableCell>
-                                <TableCell>{log.phoneNumber}</TableCell>
-                                <TableCell>{log.lastBookedLocation}</TableCell>
+                                <TableCell>(63) {log.phoneNumber?.slice(1) || "-"}</TableCell>
+                                <TableCell>{log.lastBookedLocation?.name}</TableCell>
                                 <TableCell>{log.lastActive}</TableCell>
                             </TableRow>
                         ))}

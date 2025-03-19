@@ -54,10 +54,13 @@ type UserType = "tourist" | "tour-guide" | "admin";
 declare interface User {
     id: number;
     type: UserType;
-    image: string;
+    avatar: string;
     name: string;
     email: string;
     password: string;
+    phoneNumber: string | null;
+    lastBookedLocation: Destination | null;
+    lastActive: string;
 }
 
 export interface Tourist {
