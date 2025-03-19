@@ -4,8 +4,8 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Calendar, Clock, MapPin, MessageCircleMore, Users } from "lucide-react";
 import { CardComponent } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
-import { BookingStatus } from "@/types/types";
+// import { cn } from "@/lib/utils";
+// import { BookingStatus } from "@/types/types";
 import { Booking } from "@/types/types";
 import { CancelBookingModal } from "@/components/tourist/cancel-booking-modal";
 import { RejectBookingModal } from "@/components/tour-guide/reject-booking-modal";
@@ -24,12 +24,12 @@ interface BookingCardProps {
     imageHeight?: number;
 }
 
-const statusConfig: Record<BookingStatus, { label: string; className: string }> = {
-    pending: { label: "Pending", className: "bg-yellow-100 text-yellow-800" },
-    confirmed: { label: "Confirmed", className: "bg-green-100 text-green-800" },
-    cancelled: { label: "Cancelled", className: "bg-red-100 text-red-800" },
-    completed: { label: "Completed", className: "bg-blue-100 text-blue-800" }
-};
+// const statusConfig: Record<BookingStatus, { label: string; className: string }> = {
+//     pending: { label: "Pending", className: "bg-yellow-100 text-yellow-800" },
+//     confirmed: { label: "Confirmed", className: "bg-green-100 text-green-800" },
+//     cancelled: { label: "Cancelled", className: "bg-red-100 text-red-800" },
+//     completed: { label: "Completed", className: "bg-blue-100 text-blue-800" }
+// };
 
 const BookingCard = ({
     booking,
@@ -41,7 +41,7 @@ const BookingCard = ({
     className,
     imageHeight = 48
 }: BookingCardProps) => {
-    const status = statusConfig[booking.status];
+    // const status = statusConfig[booking.status];
     const [showCancelModal, setShowCancelModal] = useState(false);
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const [showRejectModal, setShowRejectModal] = useState(false);
@@ -81,14 +81,14 @@ const BookingCard = ({
                 ]}
                 actions={
                     <div className="w-full flex items-center gap-2">
-                        <span
+                        {/* <span
                             className={cn(
                                 "px-2 py-1 rounded-full text-xs font-medium",
                                 status.className
                             )}
                         >
                             {status.label}
-                        </span>
+                        </span> */}
                         {onViewDetails && (
                             <Button
                                 className="flex-1"
