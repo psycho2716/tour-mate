@@ -11,7 +11,7 @@ const activityTypes: { id: ActivityType; label: string; icon: string }[] = [
     { id: "food", label: "Food & Dining", icon: "🍽️" }
 ];
 
-// About Us Image
+// About Us Image url will be updated later
 export const aboutUsImage = "/about-us.jpg";
 
 const destinations: Destination[] = [
