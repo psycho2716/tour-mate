@@ -101,7 +101,7 @@ export default async function DestinationPage({ params }: PageProps) {
                                             <div className="flex items-center gap-4">
                                                 <Avatar className="h-12 w-12">
                                                     <AvatarImage
-                                                        src={guide.imageUrl}
+                                                        src={guide.avatar}
                                                         alt={guide.name}
                                                     />
                                                     <AvatarFallback>

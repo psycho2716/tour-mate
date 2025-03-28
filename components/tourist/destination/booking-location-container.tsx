@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Clock, Users } from "lucide-react";
 import tourGuides from "@/data/tour-guides";
 import MiniMap from "../mini-map";
+import { Destination } from "@/types/types";
 
 const BookingLocationContainer = ({ destination }: { destination: Destination }) => {
     const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
