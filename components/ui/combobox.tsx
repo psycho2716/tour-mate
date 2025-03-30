@@ -46,6 +46,7 @@ export function Combobox({
     disabled = false
 }: ComboboxProps) {
     const [open, setOpen] = React.useState(false);
+    const [searchQuery, setSearchQuery] = React.useState("");
 
     // Initialize internal state with defaultValue if value is not provided
     const [internalValue, setInternalValue] = React.useState<string | string[]>(
@@ -57,6 +58,15 @@ export function Combobox({
             ? []
             : ""
     );
+
+    // Filter options based on search query
+    const filteredOptions = React.useMemo(() => {
+        if (!searchQuery) return options;
+
+        return options.filter((option) =>
+            option.label.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+    }, [options, searchQuery]);
 
     // Update internal state when value prop changes
     React.useEffect(() => {
@@ -147,42 +157,44 @@ export function Combobox({
                     )}
                 >
                     {multiSelect && selectedValues.length > 0 ? (
-                        <div className="flex flex-wrap gap-1 max-w-[90%] overflow-hidden">
-                            {selectedValues.slice(0, 3).map((selectedValue) => {
-                                const option = options.find((o) => o.value === selectedValue);
-                                return option ? (
-                                    <Badge
-                                        key={selectedValue}
-                                        variant="secondary"
-                                        className="mr-1 px-1.5 py-0"
-                                    >
-                                        {option.label}
-                                        <div
-                                            role="button"
-                                            tabIndex={0}
-                                            className="ml-1 ring-offset-background rounded-full outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 cursor-pointer"
-                                            onMouseDown={(e) => {
-                                                e.preventDefault();
-                                                e.stopPropagation();
-                                            }}
-                                            onClick={(e) => handleRemove(selectedValue, e)}
-                                            onKeyDown={(e) => {
-                                                if (e.key === "Enter" || e.key === " ") {
-                                                    e.preventDefault();
-                                                    handleRemove(selectedValue, e);
-                                                }
-                                            }}
+                        <div className="flex items-center gap-1 flex-1 min-w-0">
+                            <div className="flex flex-wrap gap-1 flex-1 min-w-0">
+                                {selectedValues.slice(0, 2).map((selectedValue) => {
+                                    const option = options.find((o) => o.value === selectedValue);
+                                    return option ? (
+                                        <Badge
+                                            key={selectedValue}
+                                            variant="secondary"
+                                            className="truncate max-w-[150px] px-1.5 py-0"
                                         >
-                                            <X className="h-3 w-3 text-muted-foreground hover:text-foreground" />
-                                        </div>
+                                            <span className="truncate">{option.label}</span>
+                                            <div
+                                                role="button"
+                                                tabIndex={0}
+                                                className="ml-1 shrink-0 ring-offset-background rounded-full outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 cursor-pointer"
+                                                onMouseDown={(e) => {
+                                                    e.preventDefault();
+                                                    e.stopPropagation();
+                                                }}
+                                                onClick={(e) => handleRemove(selectedValue, e)}
+                                                onKeyDown={(e) => {
+                                                    if (e.key === "Enter" || e.key === " ") {
+                                                        e.preventDefault();
+                                                        handleRemove(selectedValue, e);
+                                                    }
+                                                }}
+                                            >
+                                                <X className="h-3 w-3 text-muted-foreground hover:text-foreground" />
+                                            </div>
+                                        </Badge>
+                                    ) : null;
+                                })}
+                                {selectedValues.length > 2 && (
+                                    <Badge variant="secondary" className="shrink-0 px-1.5 py-0">
+                                        +{selectedValues.length - 2}
                                     </Badge>
-                                ) : null;
-                            })}
-                            {selectedValues.length > 3 && (
-                                <Badge variant="secondary" className="px-1.5 py-0">
-                                    +{selectedValues.length - 3} more
-                                </Badge>
-                            )}
+                                )}
+                            </div>
                         </div>
                     ) : (
                         <span className="truncate">{displayValue}</span>
@@ -196,27 +208,23 @@ export function Combobox({
                 sideOffset={4}
                 style={{ width: "var(--radix-popover-trigger-width)" }}
             >
-                {/* eslint-disable @typescript-eslint/ban-ts-comment */}
-                {/* @ts-ignore */}
-                <Command className="w-full">
+                {/* @ts-expect-error - cmdk has incomplete types */}
+                <Command className="w-full" shouldFilter={false}>
                     <CommandInput
-                        // eslint-disable @typescript-eslint/ban-ts-comment
-                        // @ts-ignore
+                        // @ts-expect-error - cmdk has incomplete types
                         placeholder={searchPlaceholder}
+                        value={searchQuery}
+                        onValueChange={setSearchQuery}
                         className="h-9 border-none focus-visible:ring-0"
                     />
-                    {/* eslint-disable @typescript-eslint/ban-ts-comment */}
-                    {/* @ts-ignore */}
+                    {/* @ts-expect-error - cmdk has incomplete types */}
                     <CommandList>
-                        {/* eslint-disable @typescript-eslint/ban-ts-comment */}
-                        {/* @ts-ignore */}
+                        {/* @ts-expect-error - cmdk has incomplete types */}
                         <CommandEmpty>{emptyMessage}</CommandEmpty>
-                        {/* eslint-disable @typescript-eslint/ban-ts-comment */}
-                        {/* @ts-ignore */}
+                        {/* @ts-expect-error - cmdk has incomplete types */}
                         <CommandGroup>
-                            {options.map((option) => (
-                                // eslint-disable @typescript-eslint/ban-ts-comment
-                                // @ts-ignore
+                            {filteredOptions.map((option) => (
+                                // @ts-expect-error - cmdk has incomplete types
                                 <CommandItem
                                     key={option.value}
                                     value={option.value}
