@@ -18,6 +18,7 @@ import { destinations } from "@/data/mockData";
 import { NumberInput } from "@/components/ui/number-input";
 import { Destination } from "@/types/types";
 import { Combobox } from "@/components/ui/combobox";
+import { toast } from "sonner";
 
 interface BookingModalProps {
     isOpen: boolean;
@@ -54,6 +55,7 @@ export function BookingModal({ isOpen, onClose, destination }: BookingModalProps
         });
         // TODO: Submit to API
         onClose();
+        toast.success("Tour booked successfully");
     };
 
     return (
