@@ -14,20 +14,34 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
-import tourGuides from "@/data/tour-guides";
+import { destinations } from "@/data/mockData";
 import { NumberInput } from "@/components/ui/number-input";
+import { Destination } from "@/types/types";
+import { Combobox } from "@/components/ui/combobox";
 
 interface BookingModalProps {
     isOpen: boolean;
     onClose: () => void;
+    destination: Destination;
 }
 
-export function BookingModal({ isOpen, onClose }: BookingModalProps) {
+export function BookingModal({ isOpen, onClose, destination }: BookingModalProps) {
     const [date, setDate] = useState<Date>();
     const [numberOfPeople, setNumberOfPeople] = useState<number>(1);
     const [selectedTime, setSelectedTime] = useState<string>("");
-    const [selectedGuide, setSelectedGuide] = useState<string>("");
+    const [selectedDestinations, setSelectedDestinations] = useState<string[]>([
+        destination.id.toString()
+    ]);
     const [specialRequests, setSpecialRequests] = useState<string>("");
+
+    const destinationOptions = destinations.map((dest) => ({
+        value: dest.id.toString(),
+        label: dest.name
+    }));
+
+    const handleDestinationChange = (value: string | string[]) => {
+        setSelectedDestinations(Array.isArray(value) ? value : [value]);
+    };
 
     const handleSubmit = () => {
         // Handle form submission
@@ -35,20 +49,19 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
             date,
             numberOfPeople,
             selectedTime,
-            selectedGuide,
+            selectedDestinations,
             specialRequests
         });
         // TODO: Submit to API
         onClose();
     };
 
-    // ... rest of your existing JSX ...
     return (
         <Modal
             isOpen={isOpen}
             onClose={onClose}
             title="Book Your Tour"
-            description="Book a guided tour of Fort San Andres"
+            description={`Book a guided tour of ${destination.name}`}
             size="lg"
         >
             <div className="space-y-6">
@@ -97,21 +110,17 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
                     </Select>
                 </div>
 
-                {/* Tour Guide */}
+                {/* Destination */}
                 <div className="space-y-2">
-                    <label className="text-sm font-medium">Tour Guide</label>
-                    <Select value={selectedGuide} onValueChange={setSelectedGuide}>
-                        <SelectTrigger>
-                            <SelectValue placeholder="Select a tour guide" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {tourGuides.map((guide) => (
-                                <SelectItem key={guide.id} value={guide.id}>
-                                    {guide.name}
-                                </SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
+                    <label className="text-sm font-medium">Destination</label>
+                    <Combobox
+                        options={destinationOptions}
+                        value={selectedDestinations}
+                        onChange={handleDestinationChange}
+                        placeholder="Select destinations"
+                        searchPlaceholder="Search destinations..."
+                        multiSelect
+                    />
                 </div>
 
                 {/* Number of People */}

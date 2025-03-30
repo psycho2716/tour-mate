@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
-import { BookingModal } from "./booking-modal";
+import React from "react";
 import { DrawerTrigger } from "@/components/ui/drawer";
 import MapDrawer from "../map-drawer";
 import { Drawer } from "@/components/ui/drawer";
@@ -12,21 +11,12 @@ import MiniMap from "../mini-map";
 import { Destination } from "@/types/types";
 
 const BookingLocationContainer = ({ destination }: { destination: Destination }) => {
-    const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
-
     return (
         <>
             <div className="space-y-8">
                 {/* Book Your Visit */}
                 <section className="rounded-lg border p-6">
-                    <h2 className="text-xl font-semibold mb-6">Book Your Visit</h2>
-                    <Button
-                        className="w-full"
-                        size="lg"
-                        onClick={() => setIsBookingModalOpen(true)}
-                    >
-                        Book Now
-                    </Button>
+                    <h2 className="text-xl font-semibold mb-6">Destination Details</h2>
                     <div className="mt-6 space-y-4">
                         <div className="flex justify-between items-center">
                             <div className="flex items-center gap-2 text-gray-700">
@@ -75,11 +65,7 @@ const BookingLocationContainer = ({ destination }: { destination: Destination })
                     </Drawer>
                 </section>
             </div>
-            <BookingModal
-                isOpen={isBookingModalOpen}
-                onClose={() => setIsBookingModalOpen(false)}
-                destination={destination}
-            />
+            
         </>
     );
 };

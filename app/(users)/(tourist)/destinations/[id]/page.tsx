@@ -2,11 +2,11 @@ import { ArrowLeft, MapPin, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Drawer } from "@/components/ui/drawer";
 import { destinations } from "@/data/mockData";
 import tourGuides from "@/data/tour-guides";
 import BookingLocationContainer from "@/components/tourist/destination/booking-location-container";
+import TourGuideCard from "@/components/tourist/tour-guide-card";
 
 interface PageProps {
     params: {
@@ -94,36 +94,11 @@ export default async function DestinationPage({ params }: PageProps) {
                                 </h2>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     {tourGuides.map((guide) => (
-                                        <div
+                                        <TourGuideCard
                                             key={guide.id}
-                                            className="flex items-center justify-between p-4 rounded-lg border"
-                                        >
-                                            <div className="flex items-center gap-4">
-                                                <Avatar className="h-12 w-12">
-                                                    <AvatarImage
-                                                        src={guide.avatar}
-                                                        alt={guide.name}
-                                                    />
-                                                    <AvatarFallback>
-                                                        {guide.name.charAt(0)}
-                                                    </AvatarFallback>
-                                                </Avatar>
-                                                <div>
-                                                    <h3 className="text-xl font-medium">
-                                                        {guide.name}
-                                                    </h3>
-                                                    <p className="text-sm text-muted-foreground">
-                                                        {guide.specialization}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div className="flex items-center gap-4">
-                                                <div className="flex items-center gap-1">
-                                                    <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                                                    <span>{guide.rating}</span>
-                                                </div>
-                                            </div>
-                                        </div>
+                                            guide={guide}
+                                            destination={destination}
+                                        />
                                     ))}
                                 </div>
                             </section>
