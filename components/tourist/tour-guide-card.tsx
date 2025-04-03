@@ -43,6 +43,7 @@ const TourGuideCard = ({ guide, destination }: TourGuideCardProps) => {
                 isOpen={isBookingModalOpen}
                 onClose={() => setIsBookingModalOpen(false)}
                 destination={destination}
+                tourGuide={guide}
             />
         </>
     );

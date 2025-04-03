@@ -75,6 +75,10 @@ export interface TourGuide {
     name: string;
     rating: number;
     avatar?: string;
+    email: string;
+    phoneNumber: string;
+    specialization: string;
+    languages: string[];
 }
 
 export type BookingStatus = "pending" | "confirmed" | "cancelled" | "completed";
