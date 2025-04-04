@@ -18,6 +18,7 @@ import tourGuides from "@/data/tour-guides";
 import { NumberInput } from "@/components/ui/number-input";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { Destination } from "@/types/types";
 
 interface BookingModalProps {
     isOpen: boolean;
@@ -39,6 +40,14 @@ export function BookingModal({ isOpen, onClose, destination }: BookingModalProps
             toast.error("Please fill in all fields.");
             return;
         }
+
+        console.log({
+            date,
+            time,
+            tourGuide,
+            numberOfPeople,
+            specialRequests
+        });
 
         toast.success("Booking successfully!", {
             description: "Your tour has been booked successfully. Please wait for the confirmation."

@@ -13,9 +13,10 @@ declare type Destination = {
         lat: number;
         lng: number;
     };
+    priceRange: string;
 };
 
-declare type ActivityType =
+export type ActivityType =
     | "cultural"
     | "shopping"
     | "nightlife"

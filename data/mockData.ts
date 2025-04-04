@@ -30,7 +30,8 @@ const destinations: Destination[] = [
         coordinates: {
             lat: 12.578737019901709,
             lng: 122.27035859323206
-        }
+        },
+        priceRange: "50-500"
     },
     {
         id: 2,
@@ -53,7 +54,8 @@ const destinations: Destination[] = [
         coordinates: {
             lat: 12.578737019901709,
             lng: 122.27035859323206
-        }
+        },
+        priceRange: "50-500"
     },
     {
         id: 3,
@@ -70,7 +72,8 @@ const destinations: Destination[] = [
         coordinates: {
             lat: 12.578737019901709,
             lng: 122.27035859323206
-        }
+        },
+        priceRange: "50-500"
     }
 ];
 
@@ -98,7 +101,8 @@ const users: User[] = [
             coordinates: {
                 lat: 12.578737019901709,
                 lng: 122.27035859323206
-            }
+            },
+            priceRange: "50-500"
         },
         lastActive: "2024-01-01"
     },

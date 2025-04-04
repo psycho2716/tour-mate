@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ActivitiesTab from "@/components/tourist/planner/activities-tab";
 import PreferencesTab from "@/components/tourist/planner/preferences-tab";
+import { ActivityType } from "@/types/types";
 
 export default function PlannerPage() {
     const [activeTab, setActiveTab] = useState("preferences");

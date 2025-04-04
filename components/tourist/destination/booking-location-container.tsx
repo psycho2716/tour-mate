@@ -5,7 +5,7 @@ import { DrawerTrigger } from "@/components/ui/drawer";
 import MapDrawer from "../map-drawer";
 import { Drawer } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
-import { Clock, Users } from "lucide-react";
+import { Clock, PhilippinePeso, Users } from "lucide-react";
 import tourGuides from "@/data/tour-guides";
 import MiniMap from "../mini-map";
 import { Destination } from "@/types/types";
@@ -31,6 +31,13 @@ const BookingLocationContainer = ({ destination }: { destination: Destination })
                                 Available Guides
                             </div>
                             <span>{tourGuides.length}</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                            <div className="flex items-center gap-2 text-gray-700">
+                                <PhilippinePeso className="h-6 w-6" />
+                                Price Range
+                            </div>
+                            <span>{destination.priceRange}</span>
                         </div>
                     </div>
                 </section>
@@ -65,7 +72,6 @@ const BookingLocationContainer = ({ destination }: { destination: Destination })
                     </Drawer>
                 </section>
             </div>
-            
         </>
     );
 };
