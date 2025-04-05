@@ -7,6 +7,7 @@ export interface TourGuide {
     languages: string[];
     rating: number;
     avatar: string;
+    password?: string;
 }
 
 const tourGuides: TourGuide[] = [
@@ -18,7 +19,8 @@ const tourGuides: TourGuide[] = [
         specialization: "Historical Tours",
         languages: ["English", "Tagalog"],
         avatar: "/images/tour-guides/sample-profile.jpg",
-        rating: 4.2
+        rating: 4.2,
+        password: "SamplePassword123"
     },
     {
         id: "2",
@@ -28,7 +30,8 @@ const tourGuides: TourGuide[] = [
         specialization: "Educational Tours",
         languages: ["English", "Tagalog"],
         avatar: "/images/tour-guides/sample-profile.jpg",
-        rating: 4.3
+        rating: 4.3,
+        password: "SamplePassword123"
     },
     {
         id: "3",
@@ -38,7 +41,8 @@ const tourGuides: TourGuide[] = [
         specialization: "Landmark Tours",
         languages: ["English", "Tagalog"],
         avatar: "/images/tour-guides/sample-profile.jpg",
-        rating: 4.1
+        rating: 4.1,
+        password: "SamplePassword123"
     }
 ];
 

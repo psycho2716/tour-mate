@@ -7,4 +7,5 @@ export type TourGuide = {
     specialization: string;
     languages: string[];
     rating: number;
+    password?: string;
 };

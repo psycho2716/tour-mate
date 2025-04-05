@@ -16,7 +16,7 @@ import Image from "next/image";
 import React from "react";
 import { toast } from "sonner";
 import { Combobox } from "@/components/ui/combobox";
-import { X } from "lucide-react";
+import { X, Eye, EyeOff } from "lucide-react";
 
 interface AddTourGuideModalProps {
     isOpen: boolean;
@@ -31,6 +31,7 @@ interface TourGuideFormData {
     specialization: string;
     languages: string[];
     image: File | null;
+    password: string;
 }
 
 const initialFormState = {
@@ -69,6 +70,14 @@ const initialFormState = {
         value: null as File | null,
         error: null,
         rules: { required: true }
+    },
+    password: {
+        value: "",
+        error: null,
+        rules: {
+            required: true,
+            minLength: 8
+        }
     }
 };
 
@@ -95,6 +104,7 @@ const availableLanguages = [
 export function AddTourGuideModal({ isOpen, onClose, onSubmit }: AddTourGuideModalProps) {
     const [imagePreview, setImagePreview] = React.useState<string | null>(null);
     const fileInputRef = React.useRef<HTMLInputElement>(null);
+    const [showPassword, setShowPassword] = React.useState(false);
 
     const { formState, setFieldValue, validateForm, resetForm } =
         useForm<TourGuideFormData>(initialFormState);
@@ -120,7 +130,8 @@ export function AddTourGuideModal({ isOpen, onClose, onSubmit }: AddTourGuideMod
                 phoneNumber: formState.phoneNumber.value,
                 specialization: formState.specialization.value,
                 languages: formState.languages.value,
-                image: formState.image.value
+                image: formState.image.value,
+                password: formState.password.value
             });
             resetForm();
             setImagePreview(null);
@@ -251,6 +262,33 @@ export function AddTourGuideModal({ isOpen, onClose, onSubmit }: AddTourGuideMod
                             <p className="text-sm text-red-500">{formState.specialization.error}</p>
                         )}
                     </div>
+                </div>
+
+                <div className="space-y-2">
+                    <Label htmlFor="password">Password</Label>
+                    <div className="relative">
+                        <Input
+                            id="password"
+                            type={showPassword ? "text" : "password"}
+                            placeholder="Minimum 8 characters"
+                            value={formState.password.value}
+                            onChange={(e) => setFieldValue("password", e.target.value)}
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                        >
+                            {showPassword ? (
+                                <EyeOff className="h-4 w-4" />
+                            ) : (
+                                <Eye className="h-4 w-4" />
+                            )}
+                        </button>
+                    </div>
+                    {formState.password.error && (
+                        <p className="text-sm text-red-500">{formState.password.error}</p>
+                    )}
                 </div>
 
                 <div className="relative space-y-2">

@@ -14,7 +14,7 @@ import {
 import { Label } from "@/components/ui/label";
 import Image from "next/image";
 import React from "react";
-import { X } from "lucide-react";
+import { X, Eye, EyeOff } from "lucide-react";
 import { Combobox } from "@/components/ui/combobox";
 import { TourGuide } from "@/data/tour-guides";
 
@@ -22,7 +22,7 @@ interface EditTourGuideModalProps {
     isOpen: boolean;
     onClose: () => void;
     onSubmit: (id: string, data: Omit<TourGuide, "id" | "rating">) => void;
-    tourGuide: TourGuide;
+    tourGuide: TourGuide & { password?: string };
 }
 
 const specializations = [
@@ -53,6 +53,7 @@ export function EditTourGuideModal({
 }: EditTourGuideModalProps) {
     const [imagePreview, setImagePreview] = React.useState<string>(tourGuide.avatar);
     const fileInputRef = React.useRef<HTMLInputElement>(null);
+    const [showPassword, setShowPassword] = React.useState(false);
 
     const initialFormState = {
         name: {
@@ -90,6 +91,13 @@ export function EditTourGuideModal({
             value: tourGuide.avatar,
             error: null,
             rules: { required: true }
+        },
+        password: {
+            value: tourGuide.password || "",
+            error: null,
+            rules: {
+                minLength: 8
+            }
         }
     };
 
@@ -117,7 +125,8 @@ export function EditTourGuideModal({
                 phoneNumber: formState.phoneNumber.value,
                 specialization: formState.specialization.value,
                 languages: formState.languages.value,
-                avatar: formState.avatar.value
+                avatar: formState.avatar.value,
+                password: formState.password.value
             });
             // toast.success("Tour guide updated successfully");
             resetForm();
@@ -243,6 +252,42 @@ export function EditTourGuideModal({
                             <p className="text-sm text-red-500">{formState.specialization.error}</p>
                         )}
                     </div>
+                </div>
+
+                <div className="space-y-2">
+                    <Label htmlFor="password">Password</Label>
+                    <div className="relative">
+                        <Input
+                            id="password"
+                            type={showPassword ? "text" : "password"}
+                            placeholder={
+                                tourGuide.password
+                                    ? "••••••••"
+                                    : "Enter new password (minimum 8 characters)"
+                            }
+                            value={formState.password.value}
+                            onChange={(e) => setFieldValue("password", e.target.value)}
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                        >
+                            {showPassword ? (
+                                <EyeOff className="h-4 w-4" />
+                            ) : (
+                                <Eye className="h-4 w-4" />
+                            )}
+                        </button>
+                    </div>
+                    <p className="text-xs text-muted-foreground">
+                        {tourGuide.password
+                            ? "Leave blank to keep current password"
+                            : "Set a password for account access"}
+                    </p>
+                    {formState.password.error && (
+                        <p className="text-sm text-red-500">{formState.password.error}</p>
+                    )}
                 </div>
 
                 <div className="relative space-y-2">

@@ -80,6 +80,7 @@ export interface TourGuide {
     phoneNumber: string;
     specialization: string;
     languages: string[];
+    password?: string;
 }
 
 export type BookingStatus = "pending" | "confirmed" | "cancelled" | "completed";
