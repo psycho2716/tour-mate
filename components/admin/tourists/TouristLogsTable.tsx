@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { users } from "@/data/mockData";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -44,10 +43,7 @@ export function TouristLogsTable() {
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead></TableHead>
                             <TableHead>Name</TableHead>
-                            <TableHead>Email</TableHead>
-                            <TableHead>Phone Number</TableHead>
                             <TableHead>Last Booked Location</TableHead>
                             <TableHead>Last Active</TableHead>
                         </TableRow>
@@ -55,15 +51,7 @@ export function TouristLogsTable() {
                     <TableBody>
                         {paginatedLogs.map((log) => (
                             <TableRow key={log.id}>
-                                <TableCell>
-                                    <Avatar>
-                                        <AvatarImage src={log.avatar} />
-                                        <AvatarFallback>{log.name.charAt(0)}</AvatarFallback>
-                                    </Avatar>
-                                </TableCell>
                                 <TableCell>{log.name}</TableCell>
-                                <TableCell>{log.email}</TableCell>
-                                <TableCell>(63) {log.phoneNumber?.slice(1) || "-"}</TableCell>
                                 <TableCell>{log.lastBookedLocation?.name}</TableCell>
                                 <TableCell>{log.lastActive}</TableCell>
                             </TableRow>
