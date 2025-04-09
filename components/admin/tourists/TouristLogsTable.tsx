@@ -10,7 +10,7 @@ import {
     TableRow
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
-import { users } from "@/data/mockData";
+import { touristLogs } from "@/data/tourist-logs";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -18,10 +18,8 @@ export function TouristLogsTable() {
     const [searchQuery, setSearchQuery] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
 
-    const filteredLogs = users.filter(
-        (log) =>
-            log.type === "tourist" &&
-            log.lastBookedLocation?.name.toLowerCase().includes(searchQuery.toLowerCase())
+    const filteredLogs = touristLogs.filter((log) =>
+        log.destination.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     const totalPages = Math.ceil(filteredLogs.length / ITEMS_PER_PAGE);
@@ -32,7 +30,7 @@ export function TouristLogsTable() {
         <div className="space-y-4">
             <div className="flex items-center space-x-2">
                 <Input
-                    placeholder="Search tourists..."
+                    placeholder="Search by location..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="max-w-sm"
@@ -51,8 +49,8 @@ export function TouristLogsTable() {
                     <TableBody>
                         {paginatedLogs.map((log) => (
                             <TableRow key={log.id}>
-                                <TableCell>{log.name}</TableCell>
-                                <TableCell>{log.lastBookedLocation?.name}</TableCell>
+                                <TableCell>{log.touristName}</TableCell>
+                                <TableCell>{log.destination.name}</TableCell>
                                 <TableCell>{log.lastActive}</TableCell>
                             </TableRow>
                         ))}
