@@ -5,6 +5,7 @@ import bookings from "@/data/bookings";
 import BookingFilter from "@/components/common/booking-filter";
 import BookingCard from "@/components/common/booking-card";
 import { BookingDetailsModal } from "@/components/tour-guide/booking-details-modal";
+import { MessageModal } from "@/components/common/message-modal";
 import { toast } from "sonner";
 
 export default function TourGuidePage() {
@@ -12,6 +13,12 @@ export default function TourGuidePage() {
     const [statusFilter, setStatusFilter] = useState("all");
     const [sortBy, setSortBy] = useState("date");
     const [selectedBooking, setSelectedBooking] = useState<(typeof bookings)[0] | null>(null);
+    const [showMessageModal, setShowMessageModal] = useState(false);
+    const [selectedTourist, setSelectedTourist] = useState<{
+        id: string;
+        name: string;
+        avatar?: string;
+    } | null>(null);
 
     // Filter and sort bookings
     const filteredBookings = bookings
@@ -45,6 +52,15 @@ export default function TourGuidePage() {
         });
     };
 
+    const handleMessageTourist = (
+        touristId: string,
+        touristName: string,
+        touristAvatar?: string
+    ) => {
+        setSelectedTourist({ id: touristId, name: touristName, avatar: touristAvatar });
+        setShowMessageModal(true);
+    };
+
     return (
         <div className="container mx-auto py-8 px-4">
             <h1 className="text-3xl font-bold mb-8">My Bookings</h1>
@@ -68,7 +84,9 @@ export default function TourGuidePage() {
                         selectedBooking={selectedBooking}
                         onReject={handleRejectBooking}
                         onConfirm={handleConfirmBooking}
-                        onMessage={(id: string) => console.log("Message user", id)}
+                        onMessage={(id) =>
+                            handleMessageTourist(id, booking.tourist.name, booking.tourist.avatar)
+                        }
                     />
                 ))}
             </div>
@@ -82,6 +100,21 @@ export default function TourGuidePage() {
                         booking={selectedBooking}
                     />
                 </>
+            )}
+
+            {/* Message Modal */}
+            {selectedTourist && (
+                <MessageModal
+                    isOpen={showMessageModal}
+                    onClose={() => {
+                        setShowMessageModal(false);
+                        setSelectedTourist(null);
+                    }}
+                    userId="tour-guide-1" // TODO: Replace with actual user ID
+                    otherUserId={selectedTourist.id}
+                    otherUserName={selectedTourist.name}
+                    otherUserAvatar={selectedTourist.avatar}
+                />
             )}
         </div>
     );

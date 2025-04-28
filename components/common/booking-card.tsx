@@ -127,9 +127,9 @@ const BookingCard = ({
                             </Button>
                         )}
                         {onMessage && booking.status === "confirmed" && (
-                            <div className="flex items-center px-3 hover:bg-slate-100 hover:ring-1 ring-slate-300 cursor-pointer rounded-md">
+                            <Button variant="ghost" onClick={() => onMessage(booking.tourist.id)}>
                                 <MessageCircleMore className="w-6 h-6 text-slate-700" />
-                            </div>
+                            </Button>
                         )}
                     </div>
                 }
