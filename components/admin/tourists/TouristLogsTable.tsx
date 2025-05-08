@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { touristLogs } from "@/data/tourist-logs";
+import { Clock } from "lucide-react";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -39,21 +40,40 @@ export function TouristLogsTable() {
 
             <div className="rounded-md border">
                 <Table>
-                    <TableHeader>
+                    <TableHeader className="bg-muted rounded-t-md">
                         <TableRow>
-                            <TableHead>Name</TableHead>
-                            <TableHead>Last Booked Location</TableHead>
-                            <TableHead>Last Active</TableHead>
+                            <TableHead className="text-center">Name</TableHead>
+                            <TableHead className="text-center">Last Booked Location</TableHead>
+                            <TableHead className="text-center">Last Active</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {paginatedLogs.map((log) => (
-                            <TableRow key={log.id}>
-                                <TableCell>{log.touristName}</TableCell>
-                                <TableCell>{log.destination.name}</TableCell>
-                                <TableCell>{log.lastActive}</TableCell>
+                        {paginatedLogs.length > 0 ? (
+                            paginatedLogs.map((log) => (
+                                <TableRow key={log.id}>
+                                    <TableCell className="text-center h-12">
+                                        {log.touristName}
+                                    </TableCell>
+                                    <TableCell className="text-center h-12">
+                                        {log.destination.name}
+                                    </TableCell>
+                                    <TableCell className="text-center h-12">
+                                        {log.lastActive}
+                                    </TableCell>
+                                </TableRow>
+                            ))
+                        ) : (
+                            <TableRow>
+                                <TableCell colSpan={3} className="h-32 text-center">
+                                    <div className="flex flex-col items-center justify-center gap-2">
+                                        <Clock className="w-8 h-8 text-muted-foreground" />
+                                        <p className="text-sm text-muted-foreground">
+                                            No logs found
+                                        </p>
+                                    </div>
+                                </TableCell>
                             </TableRow>
-                        ))}
+                        )}
                     </TableBody>
                 </Table>
             </div>

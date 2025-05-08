@@ -8,6 +8,8 @@ export interface TourGuide {
     rating: number;
     avatar: string;
     password?: string;
+    status: "pending" | "approved";
+    trainingCertificate: string;
 }
 
 const tourGuides: TourGuide[] = [
@@ -20,7 +22,9 @@ const tourGuides: TourGuide[] = [
         languages: ["English", "Tagalog"],
         avatar: "/images/tour-guides/sample-profile.jpg",
         rating: 4.2,
-        password: "SamplePassword123"
+        password: "SamplePassword123",
+        status: "pending",
+        trainingCertificate: "/images/tour-guides/certificates/sample-certificate.jpg"
     },
     {
         id: "2",
@@ -31,7 +35,9 @@ const tourGuides: TourGuide[] = [
         languages: ["English", "Tagalog"],
         avatar: "/images/tour-guides/sample-profile.jpg",
         rating: 4.3,
-        password: "SamplePassword123"
+        password: "SamplePassword123",
+        status: "approved",
+        trainingCertificate: "/images/tour-guides/certificates/sample-certificate.jpg"
     },
     {
         id: "3",
@@ -42,7 +48,9 @@ const tourGuides: TourGuide[] = [
         languages: ["English", "Tagalog"],
         avatar: "/images/tour-guides/sample-profile.jpg",
         rating: 4.1,
-        password: "SamplePassword123"
+        password: "SamplePassword123",
+        status: "pending",
+        trainingCertificate: "/images/tour-guides/certificates/sample-certificate.jpg"
     }
 ];
 

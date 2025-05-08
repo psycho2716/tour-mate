@@ -8,4 +8,6 @@ export type TourGuide = {
     languages: string[];
     rating: number;
     password?: string;
+    status: "pending" | "approved";
+    trainingCertificate?: string;
 };

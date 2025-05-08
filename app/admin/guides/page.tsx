@@ -3,8 +3,6 @@
 import { useState } from "react";
 import { TourGuidesTable } from "@/components/admin/guides/TourGuidesTable";
 import { AddTourGuideModal } from "@/components/admin/guides/AddTourGuideModal";
-import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
 
 interface TourGuideFormData {
     name: string;
@@ -29,10 +27,6 @@ export default function TourGuidesPage() {
                     <h1 className="text-2xl font-semibold">Tour Guides</h1>
                     <p className="text-sm text-gray-500">Manage tour guides here.</p>
                 </div>
-                <Button onClick={() => setIsAddModalOpen(true)}>
-                    <Plus className="mr-2 h-4 w-4" />
-                    Add Tour Guide
-                </Button>
             </div>
             <TourGuidesTable />
             <AddTourGuideModal
