@@ -33,7 +33,7 @@ export default function RegisterPage() {
 
             {/* Right side - Registration form */}
             <div className="w-full md:w-1/2 lg:w-2/5 flex items-center justify-center p-8">
-                <div className="w-full max-w-md space-y-8">
+                <div className="w-full max-w-md space-y-8 max-h-[calc(100vh-65px)] overflow-y-auto">
                     <RegisterForm />
                 </div>
             </div>
